@@ -34,7 +34,7 @@
 	  <div id="login-page">
 	  	<div class="container">
 	  	
-		      <form class="form-login" action="{{url('/login')}}">
+                    <form class="form-login"  method="post" action="{{url('/login')}}">
                           {{ csrf_field() }}
 		        <h2 class="form-login-heading">sign in now</h2>
 		        <div class="login-wrap{{ $errors->has('mobile') ? ' has-error' : '' }}">
@@ -59,19 +59,6 @@
 		            </label>
 		            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
 		            <hr>
-		            
-<!--		            <div class="login-social-link centered">
-		            <p>or you can sign in via your social network</p>
-		                <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
-		                <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
-		            </div>-->
-<!--		            <div class="registration">
-		                Don't have an account yet?<br/>
-		                <a class="" href="#">
-		                    Create an account
-		                </a>
-		            </div>-->
-		
 		        </div>
 		
 		          <!-- Modal -->
