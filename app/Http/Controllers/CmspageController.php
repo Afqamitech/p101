@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use DataTable;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\User;
 
-class AdminController extends Controller
+class CmspageController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,19 +24,14 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('admin.dashboard');
-        
-    }
-    
-    public function login()
-    {
-        return view('admin.login');
-    }
-    
     public function listPages()
     {
         return view('cmspages.list');
+    }
+    public function dataPages()
+    {dd(6);
+        $users = User::all();
+        return Datatables::of($users)
+            ->make(true);
     }
 }
