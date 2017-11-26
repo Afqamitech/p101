@@ -14,3 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('admin/logout', function(){
+    Auth::logout();
+    return redirect('/admin/login')->with('success','Logout Successful');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/admin/dashboard', 'AdminController@index')->middleware('auth');
+Route::get('/admin/login', 'AdminController@login')->middleware('auth');
+Route::get('admin/manage-pages', 'AdminController@listPages')->middleware('auth');
+

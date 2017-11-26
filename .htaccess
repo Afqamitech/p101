@@ -15,7 +15,7 @@
 	RewriteCond  expr "! %{REQUEST_FILENAME} -strmatch '*storageasset*'"
     RewriteRule ^ index.php [L]
 	
-	RewriteBase /laravel-pipl-lib
+	RewriteBase /p101
 	RewriteCond  expr " %{REQUEST_FILENAME} -strmatch '*storageasset*'"
 	RewriteRule ^storageasset/(.+)/(.+)/(.+)/(.+)$ storage/app/public/$1/$2/$3/$4
 	RewriteRule ^storageasset/(.+)/(.+)/(.+)$ storage/app/public/$1/$2/$3
