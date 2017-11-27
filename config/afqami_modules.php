@@ -1,6 +1,8 @@
 <?php
 return [
     'afqami_modules'=>array(
-        "test"
+        "test",
+        "test2",
+        "test3"
     ),
 ];
