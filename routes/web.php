@@ -25,6 +25,12 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/admin/dashboard', 'AdminController@index')->middleware('auth');
-Route::get('/admin/login', 'AdminController@login');
-Route::get('admin/manage-pages', 'AdminController@listPages')->middleware('auth');
+Route::get('/admin/login', 'AdminController@login')->name('/admin');
+
+//CMS page routs
+Route::get('/admin/manage-pages', 'CmspageController@listPages')->middleware('auth');
+Route::get('/admin/get-cms-page-data', 'CmspageController@dataPages')->middleware('auth');
+
+
+
 

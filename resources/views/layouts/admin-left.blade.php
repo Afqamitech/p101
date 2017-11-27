@@ -14,7 +14,7 @@
                   </li>
                   <li class="mt">
                       <a class="@if(Request::segment(2)=='manage-pages') active @endif" href="{{url('admin/manage-pages')}}">
-                          <i class="fa fa-dashboard"></i>
+                          <i class="fa fa-file-text"></i>
                           <span>Manage CMS Pages</span>
                       </a>
                   </li>
