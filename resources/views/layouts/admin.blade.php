@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('public/backend/css/zabuto_calendar.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url('public/backend/js/gritter/css/jquery.gritter.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/backend/lineicons/style.css')}}">    
+    <link rel="stylesheet" type="text/css" href="{{url('public/backend/css/global.css')}}">    
     
     <!-- Custom styles for this template -->
     <link href="{{url('public/backend/css/style.css')}}" rel="stylesheet">
@@ -52,7 +53,9 @@
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
       <section id="main-content">
+          <section class="wrapper">
           @yield('content')
+      </section>
       </section>
 
       <!--main content end-->
@@ -81,6 +84,7 @@
     <!--script for this page-->
     <script src="{{url('public/backend/js/sparkline-chart.js')}}"></script>    
 	<script src="{{url('public/backend/js/zabuto_calendar.js')}}"></script>	
+        @yield('footer')
 	
 	<script type="text/javascript">
         $(document).ready(function () {

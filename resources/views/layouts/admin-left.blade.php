@@ -6,16 +6,22 @@
               	  <p class="centered"><a href="profile.html"><img src="{{url('public/backend/img/ui-sam.jpg')}}" class="img-circle" width="60"></a></p>
               	  <h5 class="centered">Super Admin</h5>
               	  	
-                  <li class="mt">
+                  <li class="">
                       <a class="@if(Request::segment(2)=='dashboard') active @endif" href="{{url('admin/dashboard')}}">
                           <i class="fa fa-dashboard"></i>
                           <span>Dashboard</span>
                       </a>
                   </li>
-                  <li class="mt">
+                  <li class="">
                       <a class="@if(Request::segment(2)=='manage-pages') active @endif" href="{{url('admin/manage-pages')}}">
                           <i class="fa fa-file-text"></i>
                           <span>Manage CMS Pages</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='manage-global-value') active @endif" href="{{url('admin/manage-global-value')}}">
+                          <i class="fa fa-globe"></i>
+                          <span>Manage Global Values</span>
                       </a>
                   </li>
 

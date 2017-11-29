@@ -38,6 +38,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        
+        $this->cmsPages();
+        $this->globalValues();
 
         //
     }
@@ -69,5 +72,19 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+    
+    protected function cmsPages()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/cmspage.php'));
+    }
+    
+    protected function globalValues()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/globalvalues.php'));
     }
 }
