@@ -41,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         
         $this->cmsPages();
         $this->globalValues();
+        $this->store();
 
         //
     }
@@ -86,5 +87,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/globalvalues.php'));
+    }
+    protected function store()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/store.php'));
     }
 }

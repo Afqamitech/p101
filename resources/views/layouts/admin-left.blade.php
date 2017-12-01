@@ -24,6 +24,12 @@
                           <span>Manage Global Values</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='manage-store') active @endif" href="{{url('admin/manage-store')}}">
+                          <i class="fa fa-globe"></i>
+                          <span>Manage Store</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" >

@@ -52,7 +52,7 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      <section id="main-content">
+      <section id="main-content" style="overflow: scroll !important;">
           <section class="wrapper">
           @yield('content')
       </section>
