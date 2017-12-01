@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title')
-CMS Pages
+Store
 @endsection
 @section('content')
 <link href="{{url('public/backend/css/jquery.dataTables.min.css')}}" rel="stylesheet">

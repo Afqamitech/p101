@@ -39,68 +39,90 @@ class StoreController extends Controller {
                         ->make(true);
     }
 
-    public function createStore(Request $request)
-    {
-        if($request->method()=="GET")
-        {
+    public function createStore(Request $request) {
+        if ($request->method() == "GET") {
             return view('store.create');
-        }
-        else
-        {
-           $validator = Validator::make($request->all(), [
+        } else {
+            $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'link' => 'required',
-//                        'image' => 'required',
+                        'image' => 'required',
             ]);
-             if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
+            if ($validator->fails()) {
+                return redirect()->back()
+                                ->withErrors($validator)
+                                ->withInput();
             }
-            
-            $store=  new Store();
-            $store->name=$request->name;
-            $store->link=$request->link;
-            $store->offer_line=$request->offer_line?$request->offer_line:"";
-            $store->status=$request->status;
-            if($request->hasFile('image'))
-            {
-                $ext=$request->image->getClientOriginalExtension();
-                $new_name= time().'.'.$ext;
-                $destinationPath = public_path('/public/backend/img/');
+
+            $store = new Store();
+            $store->name = $request->name;
+            $store->link = $request->link;
+            $store->offer_line = $request->offer_line ? $request->offer_line : "";
+            $store->status = $request->status;
+            if ($request->hasFile('image')) {
+                $photo = $request->file('image');
+                $ext = $request->image->getClientOriginalExtension();
+                $new_name = time() . '.' . $ext;
+                $destinationPath = public_path('backend/img/store-image-thumb');
+                
+                $thumb_img = Image::make($photo->getRealPath())->resize(324, 143);
+                $thumb_img->save($destinationPath . '/' . $new_name);
+
+                $destinationPath = public_path('backend/img/store-image');
+                $photo->move($destinationPath, $new_name);
+                
+                $store->image=$new_name;
             }
-//            $store->save();
-//            return redirect('admin/manage-store')->with('success','Store Added Successfully!');
+            $store->save();
+            return redirect('admin/manage-store')->with('success','Store Added Successfully!');
         }
     }
 
-    public function updateGlobalValue(Request $request, $id) {
-        $global_value = GlobalValue::find($id);
+    public function updateStore(Request $request, $id) {
+        $store = Store::find($id);
         if ($request->method() == "GET") {
-            return view('globalvalues.edit', ['global_value' => $global_value]);
+            return view('store.edit', ['store' => $store]);
         } else {
-            
+
             $validator = Validator::make($request->all(), [
-                        'value' => 'required',
+                        'name' => 'required',
+                        'link' => 'required',
+                        'image' => 'required',
             ]);
-             if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-        
-            $global_value->value=$request->value;
-            $global_value->save();
+            if ($validator->fails()) {
+                return redirect()->back()
+                                ->withErrors($validator)
+                                ->withInput();
+            }
+
+            $store->name = $request->name;
+            $store->link = $request->link;
+            $store->offer_line = $request->offer_line ? $request->offer_line : "";
+            $store->status = $request->status;
             
-            return redirect('admin/manage-global-value');
+            if ($request->hasFile('image')) {
+                $photo = $request->file('image');
+                $ext = $request->image->getClientOriginalExtension();
+                $new_name = time() . '.' . $ext;
+                $destinationPath = public_path('backend/img/store-image-thumb');
+                
+                $thumb_img = Image::make($photo->getRealPath())->resize(324, 143);
+                $thumb_img->save($destinationPath . '/' . $new_name);
+
+                $destinationPath = public_path('backend/img/store-image');
+                $photo->move($destinationPath, $new_name);
+                
+                $store->image=$new_name;
+            }
+            $store->save();
+            return redirect('admin/manage-store')->with('success','Store Added Successfully!');
         }
     }
-    
-    public function deleteStore($id)
-    {
-        $store=Store::find($id);
+
+    public function deleteStore($id) {
+        $store = Store::find($id);
         $store->delete();
-        return redirect('admin/manage-store')->with('success','Store deleted successfully!');
+        return redirect('admin/manage-store')->with('success', 'Store deleted successfully!');
     }
 
 }

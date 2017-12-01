@@ -18,8 +18,8 @@ Route::get('/admin/get-store-data', 'StoreController@storeData')->middleware('au
 Route::get('/admin/create-store', 'StoreController@createStore')->middleware('auth');
 Route::post('/admin/create-store', 'StoreController@createStore')->middleware('auth');
 ////
-//Route::get('/admin/global-value/update/{id}', 'GlobalValuesController@updateGlobalValue')->middleware('auth');
-//Route::post('/admin/global-value/update/{id}', 'GlobalValuesController@updateGlobalValue')->middleware('auth');
+Route::get('/admin/store/update/{id}', 'StoreController@updateStore')->middleware('auth');
+Route::post('/admin/store/update/{id}', 'StoreController@updateStore')->middleware('auth');
 
 Route::get('/admin/store/delete/{id}', 'StoreController@deleteStore')->middleware('auth');
 
