@@ -17,12 +17,23 @@
     <!-- Custom styles for this template -->
     <link href="{{url('public/backend/css/style.css')}}" rel="stylesheet">
     <link href="{{url('public/backend/css/style-responsive.css')}}" rel="stylesheet">
+    <link href="{{url('public/backend/css/login.css')}}" rel="stylesheet">
+    
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <style>
+        .login-container{
+            position: absolute;
+            margin-left: 39%;
+            width: 353px;
+            margin-top: 8%;
+        }
+    </style>
   </head>
 
   <body>
@@ -30,9 +41,10 @@
       <!-- **********************************************************************************************************************************************************
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
-
-	  <div id="login-page">
-	  	<div class="container">
+      <div id="particles-js">
+          
+          <div id="login-page">
+	  	<div class="login-container">
 	  	
                     <form class="form-login"  method="post" action="{{url('/login')}}">
                           {{ csrf_field() }}
@@ -87,17 +99,41 @@
 	  	
 	  	</div>
 	  </div>
+      </div>
+	  
 
+
+<script src="{{url('public/backend/js/particles.js')}}"></script>
+<script src="{{url('public/backend/js/app.js')}}"></script>
+<script src="{{url('public/backend/js/stats.js')}}"></script>
+
+<script>
+  var count_particles, stats, update;
+  stats = new Stats;
+  stats.setMode(0);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0px';
+  stats.domElement.style.top = '0px';
+  document.body.appendChild(stats.domElement);
+  count_particles = document.querySelector('.js-count-particles');
+  update = function() {
+    stats.begin();
+    stats.end();
+    if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+      count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+    }
+    requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+</script>
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{url('public/backend/js/jquery.js')}}"></script>
     <script src="{{url('public/backend/js/bootstrap.min.js')}}"></script>
 
     <!--BACKSTRETCH-->
     <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
-    <script type="text/javascript" src="{{url('public/backend/js/jquery.backstretch.min.js')}}"></script>
-    <script>
-        $.backstretch("{{url('public/backend/img/login-back.jpeg')}}", {speed: 500});
-    </script>
+    
+    
 
 
   </body>
