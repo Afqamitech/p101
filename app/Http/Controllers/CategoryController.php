@@ -68,9 +68,13 @@ class CategoryController extends Controller {
                 $photo = $request->file('image');
                 $ext = $request->image->getClientOriginalExtension();
                 $new_name = time() . '.' . $ext;
-                $destinationPath = public_path('backend/img/category-image-thumb');
                 
-                $thumb_img = Image::make($photo->getRealPath())->resize(324, 143);
+                $destinationPath = public_path('backend/img/category-image/image-277-317');
+                $thumb_img = Image::make($photo->getRealPath())->resize(277, 317);
+                $thumb_img->save($destinationPath . '/' . $new_name);
+                
+                $destinationPath = public_path('backend/img/category-image/image-277-264');
+                $thumb_img = Image::make($photo->getRealPath())->resize(277, 264);
                 $thumb_img->save($destinationPath . '/' . $new_name);
 
                 $destinationPath = public_path('backend/img/category-image');
@@ -83,10 +87,10 @@ class CategoryController extends Controller {
         }
     }
 
-    public function updateGlobalValue(Request $request, $id) {
-        $global_value = GlobalValue::find($id);
+    public function updateCategory(Request $request, $id) {
+        $category = Category::find($id);
         if ($request->method() == "GET") {
-            return view('globalvalues.edit', ['global_value' => $global_value]);
+            return view('category.edit', ['category' => $category]);
         } else {
             
             $validator = Validator::make($request->all(), [

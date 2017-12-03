@@ -87,7 +87,6 @@ class StoreController extends Controller {
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'link' => 'required',
-                        'image' => 'required',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()

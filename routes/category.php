@@ -18,8 +18,8 @@ Route::get('/admin/get-category-data', 'CategoryController@categoryData')->middl
 Route::get('/admin/create-category', 'CategoryController@createCategory')->middleware('auth');
 Route::post('/admin/create-category', 'CategoryController@createCategory')->middleware('auth');
 ////
-//Route::get('/admin/global-value/update/{id}', 'GlobalValuesController@updateGlobalValue')->middleware('auth');
-//Route::post('/admin/global-value/update/{id}', 'GlobalValuesController@updateGlobalValue')->middleware('auth');
+Route::get('/admin/category/update/{id}', 'CategoryController@updateCategory')->middleware('auth');
+Route::post('/admin/global-value/update/{id}', 'GlobalValuesController@updateGlobalValue')->middleware('auth');
 
 Route::get('/admin/category/delete/{id}', 'CategoryController@deleteCategory')->middleware('auth');
 

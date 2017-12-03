@@ -23,14 +23,14 @@ Category
         @if ($errors->has('icon'))
         <span><strong class="text-danger">{{ $errors->first('icon') }}</strong></span>
         @endif
-        
+        <label>Category Image</label>
         <input type="file" value="{{old('image')}}" name="image">
         @if ($errors->has('image'))
         <span><strong class="text-danger" >{{ $errors->first('image') }}</strong></span>
         @endif
         <br><br>
         
-        <input type="checkbox" checked="" data-toggle="switch"  value="1"/> is Featured
+        <input type="checkbox" name="is_featured" checked="" data-toggle="switch"  value="1"/> is Featured
         <br>
         <input checked type="radio" value="1" name="status">Publish
         <input type="radio" value="0" name="status">Unpublish
