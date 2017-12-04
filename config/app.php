@@ -185,6 +185,7 @@ return [
         //afqami providers goes here....
         
         App\AfqamiModules\ServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
 
@@ -236,6 +237,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => 'Yajra\Datatables\Facades\Datatables',
         'Image' => Intervention\Image\Facades\Image::class,
+         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 
