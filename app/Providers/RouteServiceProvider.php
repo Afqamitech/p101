@@ -43,6 +43,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->globalValues();
         $this->store();
         $this->categories();
+        $this->coupon();
 
         //
     }
@@ -101,5 +102,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/category.php'));
+    }
+    
+    protected function coupon()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/coupon.php'));
     }
 }

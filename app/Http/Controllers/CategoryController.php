@@ -50,7 +50,7 @@ class CategoryController extends Controller {
            $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'icon' => 'required',
-//                        'image' => 'required',
+                        'image' => 'required',
             ]);
              if ($validator->fails()) {
             return redirect()->back()
@@ -63,7 +63,6 @@ class CategoryController extends Controller {
             $category->icon=$request->icon;
             $category->is_featured=$request->is_featured? $request->is_featured:'0';
             $category->status=$request->status;
-            $category->image='';
             if ($request->hasFile('image')) {
                 $photo = $request->file('image');
                 $ext = $request->image->getClientOriginalExtension();
@@ -92,9 +91,10 @@ class CategoryController extends Controller {
         if ($request->method() == "GET") {
             return view('category.edit', ['category' => $category]);
         } else {
-            
             $validator = Validator::make($request->all(), [
-                        'value' => 'required',
+                        'name' => 'required',
+                        'icon' => 'required',
+                        'image' => 'required',
             ]);
              if ($validator->fails()) {
             return redirect()->back()
@@ -102,10 +102,31 @@ class CategoryController extends Controller {
                         ->withInput();
         }
         
-            $global_value->value=$request->value;
-            $global_value->save();
+            $category->name=$request->name;
+            $category->icon=$request->icon;
+            $category->is_featured=$request->is_featured? $request->is_featured:'0';
+            $category->status=$request->status;
+            if ($request->hasFile('image')) {
+                $photo = $request->file('image');
+                $ext = $request->image->getClientOriginalExtension();
+                $new_name = time() . '.' . $ext;
+                
+                $destinationPath = public_path('backend/img/category-image/image-277-317');
+                $thumb_img = Image::make($photo->getRealPath())->resize(277, 317);
+                $thumb_img->save($destinationPath . '/' . $new_name);
+                
+                $destinationPath = public_path('backend/img/category-image/image-277-264');
+                $thumb_img = Image::make($photo->getRealPath())->resize(277, 264);
+                $thumb_img->save($destinationPath . '/' . $new_name);
+
+                $destinationPath = public_path('backend/img/category-image');
+                $photo->move($destinationPath, $new_name);
+                
+                $category->image=$new_name;
+            }
+            $category->save();
             
-            return redirect('admin/manage-global-value');
+            return redirect('admin/manage-category');
         }
     }
     

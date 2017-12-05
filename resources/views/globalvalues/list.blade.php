@@ -42,7 +42,7 @@ $(document).ready(function () {
             {data: "update",
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<a class="btn btn-primary" href="{{url("admin/global-value/update/")}}/' + row.id + '">Update</a>';
+                        return '<a class="btn btn-primary" href="{{url("admin/global-value/update/")}}/' + row.id + '"><i class="fa fa-pencil"></i></a>';
                     }
                     return data;
                 },

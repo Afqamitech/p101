@@ -30,6 +30,18 @@
                           <span>Manage Store</span>
                       </a>
                   </li>
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='manage-category') active @endif" href="{{url('admin/manage-category')}}">
+                          <i class="fa fa-globe"></i>
+                          <span>Manage Category</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='manage-coupon') active @endif" href="{{url('admin/manage-coupon')}}">
+                          <i class="fa fa-globe"></i>
+                          <span>Manage Coupon</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
