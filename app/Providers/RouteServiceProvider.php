@@ -44,6 +44,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->store();
         $this->categories();
         $this->coupon();
+        $this->redeem();
+        $this->query();
 
         //
     }
@@ -109,5 +111,19 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/coupon.php'));
+    }
+    
+    protected function redeem()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/redeem.php'));
+    }
+    
+    protected function query()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/query.php'));
     }
 }

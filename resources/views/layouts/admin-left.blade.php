@@ -38,8 +38,22 @@
                   </li>
                   <li class="">
                       <a class="@if(Request::segment(2)=='manage-coupon') active @endif" href="{{url('admin/manage-coupon')}}">
-                          <i class="fa fa-globe"></i>
+                          <i class="fa fa-tags"></i>
                           <span>Manage Coupon</span>
+                      </a>
+                  </li>
+                  
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='redeem-master') active @endif" href="{{url('admin/redeem-master')}}">
+                          <i class="fa fa-money"></i>
+                          <span>Redeem Master</span>
+                      </a>
+                  </li>
+                  
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='query') active @endif" href="{{url('admin/query')}}">
+                          <i class="fa fa-question-circle"></i>
+                          <span>Missing Cashback Reports</span>
                       </a>
                   </li>
 
