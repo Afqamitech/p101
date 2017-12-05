@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/admin/dashboard', 'AdminController@index')->middleware('auth');
 Route::get('/admin/login', 'AdminController@login')->name('/admin');
+Route::get('/admin/email', 'AdminController@email')->name('/admin');
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
