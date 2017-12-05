@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
+use App\UserInformation;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller {
     /*
@@ -36,38 +39,45 @@ use AuthenticatesUsers;
         $this->middleware('guest')->except('logout');
     }
 
-    public function redirectToGoogle() {
-        return Socialite::driver('google')->redirect();
+    public function redirectToProvider($provider) {
+        return Socialite::driver($provider)->redirect();
     }
 
-    public function redirectToFacebook() {
-        return Socialite::driver('facebook')->redirect();
+    public function handleProviderCallback($provider) {
+        try {
+            $user = Socialite::driver($provider)->user();
+            
+            $authUser = $this->findOrCreateUser($user, $provider);
+            
+            Auth::loginUsingId($authUser->id);
+            return redirect()->route('home');
+        } catch (Exception $e) {
+            return redirect('auth/'.$provider);
+        }
     }
 
-    public function handleFacebookCallback() {
-        try {
-            $user = Socialite::driver('facebook')->user();
-            dd($user);
-            $userModel = new User;
-            $createdUser = $userModel->addNew($user);
-            Auth::loginUsingId($createdUser->id);
-            return redirect()->route('home');
-        } catch (Exception $e) {
-            return redirect('auth/facebook');
+    public function findOrCreateUser($user, $provider) {
+        $authUser = User::where('provider_id', $user->id)->first();
+        if ($authUser) {
+            return $authUser;
         }
-    }
-    
-    public function handleGoogleCallback() {
-        try {
-            $user = Socialite::driver('google')->user();
-            dd($user);
-            $userModel = new User;
-            $createdUser = $userModel->addNew($user);
-            Auth::loginUsingId($createdUser->id);
-            return redirect()->route('home');
-        } catch (Exception $e) {
-            return redirect('auth/facebook');
-        }
+        $createdUser = User::create([
+                    'email' => $user->email,
+                    'password' => ' ',
+                    'mobile' => ' ',
+                    'provider' => $provider,
+                    'provider_id' => $user->id
+        ]);
+        
+        
+        UserInformation::create([
+        'first_name'=> $user->name,   
+        'image'=> $user->avatar,   
+        'user_id'=> $createdUser->id,   
+            'user_type'=>2
+        ]);
+        
+        return $createdUser;
     }
 
 }

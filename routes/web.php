@@ -27,10 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/dashboard', 'AdminController@index')->middleware('auth');
 Route::get('/admin/login', 'AdminController@login')->name('/admin');
 
-Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
-Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
-Route::get('auth/facebook', 'Auth\LoginController@redirectToFacebook');
-Route::get('auth/facebook/callback', 'Auth\LoginController@handleFacebookCallback');
+Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 

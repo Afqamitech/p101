@@ -32,7 +32,7 @@ class HomeController extends Controller
         }
         else
         {
-            if(Auth::user()->userInformation->user_type==2 && Auth::user()->userInformation->user_status==1)
+            if(Auth::user()->userInformation->user_type==2 )
             {
                 return view('home');
             }

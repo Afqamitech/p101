@@ -61,6 +61,9 @@
                                 <a class="btn btn-link" href="{{ url('auth/google') }}">
                                     Login with Google
                                 </a>
+                                <a class="btn btn-link" href="{{ url('auth/facebook') }}">
+                                    Login with Facebook
+                                </a>
                             </div>
                         </div>
                     </form>
