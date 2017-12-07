@@ -13,6 +13,16 @@ Global Values
 <div class="info col-md-12">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
+        <label>Select Category</label>
+        <select name="category">
+            @foreach($categories as $category)
+            <option value="{{$category->id}}" @if(old('category',$store->category_id)==$category->id) selected @endif>{{$category->name}}</option>
+            @endforeach
+        </select>
+        @if ($errors->has('category'))
+        <span><strong class="text-danger">{{ $errors->first('category') }}</strong></span>
+        @endif
+        <br><br>
         <input type="text" value="{{old('name',$store->name)}}" name="name" placeholder="Store Name">
         @if ($errors->has('name'))
         <span><strong class="text-danger">{{ $errors->first('name') }}</strong></span>

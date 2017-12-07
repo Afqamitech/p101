@@ -16,8 +16,8 @@ Store
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Link</th>
+                <th>Store Name</th>
+                <th>Category Name</th>
                 <th>Status</th>
                 <th>Action</th>
                 <th>Delete</th>
@@ -40,7 +40,7 @@ $(document).ready(function () {
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
-            {data: 'link', name: 'link'},
+            {data: 'category', name: 'category'},
             {data: 'status', name: 'status'},
             {data: "update",
                 render: function (data, type, row) {

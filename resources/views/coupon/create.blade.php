@@ -14,15 +14,33 @@ Coupon
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        
         <input type="text" value="{{old('name')}}" name="name" placeholder="Coupon Name">
         @if ($errors->has('name'))
         <span><strong class="text-danger">{{ $errors->first('name') }}</strong></span>
         @endif
         <br><br>
         <input type="text" value="{{old('label')}}" name="label" placeholder="Label">
-        @if ($errors->has('label'))
+        @if ($errors->has('label'))<label>Select Category</label>
+        <select name="category" id="category">
+            @foreach($categories as $category)
+            <option value="{{$category->id}}" @if(old('category')==$category->id) selected @endif>{{$category->name}}</option>
+            @endforeach
+        </select>
+        @if ($errors->has('category'))
+        <span><strong class="text-danger">{{ $errors->first('category') }}</strong></span>
+        @endif
+        <br><br>
+        <label>Select Store</label>
+        <select name="store" id="store">
+        </select>
+        @if ($errors->has('store'))
+        <span><strong class="text-danger">{{ $errors->first('store') }}</strong></span>
+        @endif
+        <br><br>
         <span><strong class="text-danger">{{ $errors->first('label') }}</strong></span>
         @endif
+        <br><br>
         <input type="text" value="{{old('offer_line')}}" name="offer_line" placeholder="Offer Line">
         @if ($errors->has('offer_line'))
         <span><strong class="text-danger">{{ $errors->first('offer_line') }}</strong></span>
@@ -42,7 +60,7 @@ Coupon
         @if ($errors->has('expiry_date'))
         <span><strong class="text-danger" >{{ $errors->first('expiry_date') }}</strong></span>
         @endif
-        
+
         <br><br>
         <input checked type="radio" value="1" name="status">Publish
         <input type="radio" value="0" name="status">Unpublish
@@ -50,4 +68,27 @@ Coupon
         <input type="submit" value="Submit">
     </form>
 </div>
+@endsection
+@section('footer')
+<script>
+    $('#category').change(function () {
+        var category_id = $('#category').val();
+        $.ajax({
+            url: "{{url('/get-store')}}",
+            type: "get", //send it through get method
+            dataType: "json", //send it through get method
+            data: {
+                category_id: category_id,
+            },
+            success: function (response) {
+//                console.log(response);
+                $('#store').html('');
+                response.forEach(function(obj,index){
+                    $('#store').append('<option value="'+obj.id+'">'+obj.name+'</option>');
+                })
+                
+            },
+        });
+    })
+</script>
 @endsection

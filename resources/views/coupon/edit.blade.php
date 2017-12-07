@@ -14,6 +14,24 @@ Coupon
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        <label>Select Category</label>
+        <select name="category" id="category">
+            @foreach($categories as $category)
+            <option value="{{$category->id}}" @if(old('category')==$category->id) selected @endif>{{$category->name}}</option>
+            @endforeach
+        </select>
+        @if ($errors->has('category'))
+        <span><strong class="text-danger">{{ $errors->first('category') }}</strong></span>
+        @endif
+        <br><br>
+        <label>Select Store</label>
+        <select name="store" id="store">
+            <option value="{{$coupon->store->id}}">{{$coupon->store->name}}</option>
+        </select>
+        @if ($errors->has('store'))
+        <span><strong class="text-danger">{{ $errors->first('store') }}</strong></span>
+        @endif
+        <br><br>
         <input type="text" value="{{old('name',$coupon->name)}}" name="name" placeholder="Coupon Name">
         @if ($errors->has('name'))
         <span><strong class="text-danger">{{ $errors->first('name') }}</strong></span>
@@ -52,4 +70,26 @@ Coupon
     </form>
 </div>
 @endsection
-
+@section('footer')
+<script>
+    $('#category').change(function () {
+        var category_id = $('#category').val();
+        $.ajax({
+            url: "{{url('/get-store')}}",
+            type: "get", //send it through get method
+            dataType: "json", //send it through get method
+            data: {
+                category_id: category_id,
+            },
+            success: function (response) {
+//                console.log(response);
+                $('#store').html('');
+                response.forEach(function(obj,index){
+                    $('#store').append('<option value="'+obj.id+'">'+obj.name+'</option>');
+                })
+                
+            },
+        });
+    })
+</script>
+@endsection

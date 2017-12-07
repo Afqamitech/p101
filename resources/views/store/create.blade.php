@@ -14,6 +14,16 @@ Store
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        <label>Select Category</label>
+        <select name="category">
+            @foreach($categories as $category)
+            <option value="{{$category->id}}" @if(old('category')==$category->id) selected @endif>{{$category->name}}</option>
+            @endforeach
+        </select>
+        @if ($errors->has('category'))
+        <span><strong class="text-danger">{{ $errors->first('category') }}</strong></span>
+        @endif
+        <br><br>
         <input type="text" value="{{old('name')}}" name="name" placeholder="Store Name">
         @if ($errors->has('name'))
         <span><strong class="text-danger">{{ $errors->first('name') }}</strong></span>
@@ -24,7 +34,7 @@ Store
         <span><strong class="text-danger">{{ $errors->first('link') }}</strong></span>
         @endif
         <br><br>
-        <input type="text" value="{{old('offer_line')}}" name="offer_line" placeholder="Store Offer Line">
+        <input type="text" value="{{old('offer_line')}}" name="offer_line" placeholder="Store Offer Line" accept="image/*">
         <br><br>
         <input type="file" value="{{old('image')}}" name="image">
         @if ($errors->has('image'))

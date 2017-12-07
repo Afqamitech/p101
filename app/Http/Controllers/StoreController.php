@@ -9,6 +9,7 @@ use App\User;
 use App\Models\Store;
 use Validator;
 use Image;
+use App\Models\Category;
 
 class StoreController extends Controller {
 
@@ -31,22 +32,27 @@ class StoreController extends Controller {
     }
 
     public function storeData() {
-        $global_value = Store::all();
-        return Datatables::of($global_value)
-                        ->addColumn('status', function($cms) {
-                            return $cms->status == '1' ? 'Published' : "Unpublished";
+        $stores = Store::all();
+        return Datatables::of($stores)
+                        ->addColumn('status', function($store) {
+                            return $store->status == '1' ? 'Published' : "Unpublished";
+                        })
+                        ->addColumn('category', function($store) {
+                            return $store->category->name;
                         })
                         ->make(true);
     }
 
     public function createStore(Request $request) {
         if ($request->method() == "GET") {
-            return view('store.create');
+            $category=  Category::all();
+            return view('store.create',['categories'=>$category]);
         } else {
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'link' => 'required',
                         'image' => 'required',
+                        'category' => 'required',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()
@@ -55,6 +61,8 @@ class StoreController extends Controller {
             }
 
             $store = new Store();
+            
+            $store->category_id = $request->category;
             $store->name = $request->name;
             $store->link = $request->link;
             $store->offer_line = $request->offer_line ? $request->offer_line : "";
@@ -81,19 +89,22 @@ class StoreController extends Controller {
     public function updateStore(Request $request, $id) {
         $store = Store::find($id);
         if ($request->method() == "GET") {
-            return view('store.edit', ['store' => $store]);
+            $category=  Category::all();
+            return view('store.edit', ['store' => $store,'categories'=>$category]);
         } else {
 
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'link' => 'required',
+                        'category' => 'required',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()
                                 ->withErrors($validator)
                                 ->withInput();
             }
-
+            
+            $store->category_id = $request->category;
             $store->name = $request->name;
             $store->link = $request->link;
             $store->offer_line = $request->offer_line ? $request->offer_line : "";
