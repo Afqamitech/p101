@@ -6,7 +6,7 @@ Dashboard
 <section class="wrapper">
 
               <div class="row">
-                  <div class="col-lg-9 main-chart">
+                  <div class="col-lg-12 main-chart">
                   
                   	<div class="row mtbox">
                   		<div class="col-md-2 col-sm-2 col-md-offset-1 box0">
@@ -48,7 +48,7 @@ Dashboard
                   	</div><!-- /row mt -->	
                   
                       
-                      <div class="row mt">
+                      <div class="row mt hidden">
                       <!-- SERVER STATUS PANELS -->
                       	<div class="col-md-4 col-sm-4 mb">
                       		<div class="white-panel pn donut-chart">
@@ -120,7 +120,7 @@ Dashboard
                     </div><!-- /row -->
                     
                     				
-					<div class="row">
+					<div class="row hidden">
 						<!-- TWITTER PANEL -->
 						<div class="col-md-4 mb">
                       		<div class="darkblue-panel pn">
@@ -233,12 +233,12 @@ Dashboard
       RIGHT SIDEBAR CONTENT
       *********************************************************************************************************************************************************** -->                  
                   
-                  <div class="col-lg-3 ds">
+                  <div class="col-lg-3 ds hidden">
                     <!--COMPLETED ACTIONS DONUTS CHART-->
 						<h3>NOTIFICATIONS</h3>
                                         
                       <!-- First Action -->
-                      <div class="desc">
+                      <div class="desc ">
                       	<div class="thumb">
                       		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
                       	</div>
@@ -368,4 +368,27 @@ Dashboard
                   </div><!-- /col-lg-3 -->
               </div><! --/row -->
           </section>
+@endsection
+
+@section('footer')
+<script>
+           $(document).ready(function () {
+        var unique_id = $.gritter.add({
+            // (string | mandatory) the heading of the notification
+            title: 'Welcome Admin!',
+            // (string | mandatory) the text inside the notification
+            text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
+            // (string | optional) the image to display on the left
+            image: '{{url('public/backend/img/ui-sam.jpg')}}',
+            // (bool | optional) if you want it to fade out on its own or just sit there
+            sticky: true,
+            // (int | optional) the time you want it to be alive for before fading out
+            time: '',
+            // (string | optional) the class name you want to apply to that specific message
+            class_name: 'my-sticky-class'
+        });
+
+        return false;
+        });
+    </script>
 @endsection

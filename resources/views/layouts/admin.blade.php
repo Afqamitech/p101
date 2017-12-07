@@ -84,27 +84,10 @@
     <!--script for this page-->
     <script src="{{url('public/backend/js/sparkline-chart.js')}}"></script>    
 	<script src="{{url('public/backend/js/zabuto_calendar.js')}}"></script>	
-        @yield('footer')
+        
 	
 	<script type="text/javascript">
-        $(document).ready(function () {
-        var unique_id = $.gritter.add({
-            // (string | mandatory) the heading of the notification
-            title: 'Welcome to Afqami!',
-            // (string | mandatory) the text inside the notification
-            text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo.',
-            // (string | optional) the image to display on the left
-            image: '{{url('public/backend/img/ui-sam.jpg')}}',
-            // (bool | optional) if you want it to fade out on its own or just sit there
-            sticky: true,
-            // (int | optional) the time you want it to be alive for before fading out
-            time: '',
-            // (string | optional) the class name you want to apply to that specific message
-            class_name: 'my-sticky-class'
-        });
-
-        return false;
-        });
+ 
 	</script>
 	
 	<script type="application/javascript">
@@ -140,8 +123,15 @@
             var to = $("#" + id).data("to");
             console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
         }
+        
+        $(window).ready(function(){
+            
+           setTimeout(function(){
+               $("#gritter-notice-wrapper").hide();
+           },3000) 
+        });
     </script>
   
-
+@yield('footer')
   </body>
 </html>
