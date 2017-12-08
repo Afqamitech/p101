@@ -61,23 +61,23 @@ use AuthenticatesUsers;
         if ($authUser) {
             return $authUser;
         }
-        $createdUser = User::create([
+         $createdUser = User::create([
                     'email' => $user->email,
                     'password' => ' ',
                     'mobile' => ' ',
                     'provider' => $provider,
-                    'provider_id' => $user->id
+                    'provider_id' => $user->id,
+                    'name'=> $user->name,   
+                    'image' => $user->avatar,
+                    'user_type' => "2"
         ]);
-        
-        
-        UserInformation::create([
-        'first_name'=> $user->name,   
-        'image'=> $user->avatar,   
-        'user_id'=> $createdUser->id,   
-            'user_type'=>2
-        ]);
-        
-        return $createdUser;
+         
+         $createdUser->flingal_id= "flingal".$createdUser->id;
+         $createdUser->save();
+         
+         return $createdUser;
+         
+         
     }
 
 }

@@ -6,10 +6,17 @@
               	  <p class="centered"><a href="profile.html"><img src="{{url('public/backend/img/ui-sam.jpg')}}" class="img-circle" width="60"></a></p>
               	  <h5 class="centered">Super Admin</h5>
               	  	
+                  
                   <li class="">
                       <a class="@if(Request::segment(2)=='dashboard') active @endif" href="{{url('admin/dashboard')}}">
                           <i class="fa fa-dashboard"></i>
                           <span>Dashboard</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='users') active @endif" href="{{url('admin/users/manage-users')}}">
+                          <i class="fa fa-user"></i>
+                          <span>Users</span>
                       </a>
                   </li>
                   <li class="">

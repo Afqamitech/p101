@@ -26,14 +26,15 @@ class HomeController extends Controller
     {
         
         
-        if(Auth::user()->userInformation->user_type==1)
+        if(Auth::user()->user_type==1)
         {
             return redirect('admin/dashboard');
         }
         else
         {
-            if(Auth::user()->userInformation->user_type==2 )
+            if(Auth::user()->user_type==2 )
             {
+                
                 return view('home');
             }
             else {
