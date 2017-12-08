@@ -8,7 +8,7 @@ Manage Users
     <li><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
     <li><a href="javascript:void(0)">Manage Users</a></li>
 </ul>
-<h2>Manage Category</h2>
+<h2>Manage Users</h2>
 <hr>
 
 <div class="container">
