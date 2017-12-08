@@ -46,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->coupon();
         $this->redeem();
         $this->query();
+        $this->slider();
 
         //
     }
@@ -125,5 +126,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/query.php'));
+    }
+    
+    protected function slider()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/slider.php'));
     }
 }

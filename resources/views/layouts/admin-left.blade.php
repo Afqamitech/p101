@@ -56,6 +56,13 @@
                           <span>Missing Cashback Reports</span>
                       </a>
                   </li>
+                  
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='manage-slider') active @endif" href="{{url('admin/manage-slider')}}">
+                          <i class="fa fa-question-circle"></i>
+                          <span>Manage Slider</span>
+                      </a>
+                  </li>
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
