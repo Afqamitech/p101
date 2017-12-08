@@ -47,6 +47,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->coupon();
         $this->redeem();
         $this->query();
+        $this->orderHistory();
 
         //
     }
@@ -105,6 +106,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/category.php'));
+    }
+    
+    protected function orderHistory()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/order_history.php'));
     }
     protected function userPages()
     {
