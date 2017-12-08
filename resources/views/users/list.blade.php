@@ -17,8 +17,10 @@ Manage Users
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Flingal ID</th>
                 <th>Registered With</th>
                 <th>Email</th>
+                <th>Created At</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -38,9 +40,11 @@ $(document).ready(function () {
         ajax: "{{ url('/admin/users/get-user-data') }}",
         columns: [
             {data: 'id', name: 'id'},
-            {data: 'first_name', name: 'first_name'},
-            {data: 'provider', name: 'users.provider'},
-            {data: 'email', name: 'users.email'},
+            {data: 'name', name: 'name'},
+            {data: 'flingal_id', name: 'flingal_id'},
+            {data: 'provider', name: 'provider'},
+            {data: 'email', name: 'email'},
+            {data: 'created_at', name: 'created_at'},
             
             
             {data: "action",

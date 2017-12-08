@@ -35,16 +35,12 @@ class UserController extends Controller {
     public function userData(Request $request) {
         
         
-        $users = \App\UserInformation::where('user_type',2)->get();
+        $users = \App\User::where('user_type','2')->get();
+        
         
        
         return Datatables::of($users)
-                ->addColumn('email', function($user) {
-                            return $user->user->email;
-                        })
-                ->addColumn('provider', function($user) {
-                            return $user->user->provider;
-                        })
+
                 ->make(true);
     }
 
