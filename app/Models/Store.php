@@ -19,7 +19,11 @@ class Store extends Model
     protected $fillable = [
         'name', 'link','offer_line','image','status'
     ];
-
+    
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category','category_id','id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

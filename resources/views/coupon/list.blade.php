@@ -16,7 +16,9 @@ Coupon
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Coupon Name</th>
+                <th>Category</th>
+                <th>Store</th>
                 <th>Label</th>
                 <th>Deal of the day</th>
                 <th>Expiry Date</th>
@@ -42,6 +44,8 @@ $(document).ready(function () {
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
+            {data: 'category', name: 'category'},
+            {data: 'store', name: 'store'},
             {data: 'label', name: 'label'},
             {data: 'deal_of_the_day', name: 'deal_of_the_day'},
             {data: 'expiry_date', name: 'expiry_date'},

@@ -23,6 +23,8 @@ Route::post('/admin/coupon/update/{id}', 'CouponController@updateCoupon')->middl
 
 Route::get('/admin/coupon/delete/{id}', 'CouponController@deleteCoupon')->middleware('auth');
 
+Route::get('/get-store', 'CouponController@getStores')->middleware('auth');
+
 
 
 

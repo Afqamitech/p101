@@ -15,7 +15,11 @@ class Category extends Model
     protected $fillable = [
         'name','icon','is_featured', 'image','status'
     ];
-
+    
+    public function stores()
+    {
+        return $this->hasMany('App\Models\Store','category_id','id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *
