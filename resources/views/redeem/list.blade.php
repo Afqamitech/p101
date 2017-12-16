@@ -19,6 +19,7 @@ Redeem Master
                 <th>Name</th>
                 <th>Redeem Amount</th>
                 <th>Payment Type</th>
+                <th>Contact No.</th>
                 <th>Status</th>
                 <th>Action</th>
                 <!--<th>Delete</th>-->
@@ -56,6 +57,7 @@ $(document).ready(function () {
                 },
                 className: "dt-body-center"
             },
+            {data: 'mobile', name: 'mobile'},
                 {data: "status",
                 render: function (data, type, row) {
                     if (type === 'display') {

@@ -37,6 +37,9 @@ class RedeemController extends Controller {
                         ->addColumn('name', function($redeem ) {
                             return $redeem->user->name;
                         })
+                        ->addColumn('mobile', function($redeem ) {
+                            return $redeem->user->mobile==""?$redeem->user->mobile:'Not available';
+                        })
                         ->make(true);
     }
     
