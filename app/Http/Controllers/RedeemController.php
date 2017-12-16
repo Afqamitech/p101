@@ -35,9 +35,17 @@ class RedeemController extends Controller {
         
         return Datatables::of($redeem)
                         ->addColumn('name', function($redeem ) {
-                            return $redeem->user->userInformation->first_name;
+                            return $redeem->user->name;
                         })
                         ->make(true);
+    }
+    
+    public function setRedeemStatus(Request $request)
+    {
+        $redeem=Redeem::where('user_id',$request->customer_id)->first();
+//        dd($redeem);
+        $redeem->status=$request->status;
+        $redeem->save();
     }
 
 //    public function createCategory(Request $request)
