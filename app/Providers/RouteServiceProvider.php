@@ -48,6 +48,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->redeem();
         $this->query();
         $this->orderHistory();
+        $this->slider();
 
         //
     }
@@ -141,6 +142,8 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/query.php'));
     }
+    
+    
     
     protected function slider()
     {
