@@ -1,42 +1,45 @@
 @extends('layouts.admin')
 @section('title')
-Category
+Create Order History
 @endsection
 @section('content')
 <link href="{{url('public/backend/css/jquery-ui.css')}}" rel="stylesheet">
 <ul class="breadcrumb">
     <li><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-    <li><a href="{{url('admin/manage-category')}}">Manage Category</a></li>
-    <li><a href="javascript:void(0)">Update Category</a></li>
+    <li><a href="{{url('admin/manage-category')}}">Order History Master</a></li>
+    <li><a href="javascript:void(0)">Update Order History</a></li>
 </ul>
-<h2>Update Category</h2>
+<h2>Update Order History</h2>
 <hr>
 <div class="info col-md-12">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
-        <input type="text" value="{{old('name',$category->name)}}" name="name" placeholder="Category Name">
-        @if ($errors->has('name'))
-        <span><strong class="text-danger">{{ $errors->first('name') }}</strong></span>
+        <input type="text" value="{{old('flingal_id', $orderHistory->flingal_id)}}" name="flingal_id" placeholder="Flingal Id">
+        @if ($errors->has('flingal_id'))
+        <span><strong class="text-danger">{{ $errors->first('flingal_id') }}</strong></span>
         @endif
         <br><br>
-        <input type="text" id="project" value="{{old('icon',$category->icon)}}" name="icon" placeholder="Icon">
-        @if ($errors->has('icon'))
-        <span><strong class="text-danger">{{ $errors->first('icon') }}</strong></span>
+        <input type="text" value="{{old('order_id',$orderHistory->order_id)}}" name="order_id" placeholder="Order Id">
+        @if ($errors->has('order_id'))
+        <span><strong class="text-danger">{{ $errors->first('order_id') }}</strong></span>
         @endif
-        <label>Category Image</label>
-        <input type="file" value="{{old('image')}}" name="image">
-        @if ($errors->has('image'))
-        <span><strong class="text-danger" >{{ $errors->first('image') }}</strong></span>
-        @endif
-        <img width="80px" src="{{url('public/backend/img/category-image/'.$category->image)}}">
         <br><br>
-
-        <input type="checkbox" name="is_featured"  data-toggle="switch" @if($category->is_featured==1) checked @endif value="1"/> is Featured
-               <br>
-        <input type="radio" value="1" name="status" @if($category->status==1) checked @endif>Publish
-               <input type="radio" value="0" name="status" @if($category->status==1) checked @endif>Unpublish
-               <br><br>
+        <input type="text" value="{{old('title',$orderHistory->title)}}" name="title" placeholder="Title">
+        @if ($errors->has('title'))
+        <span><strong class="text-danger">{{ $errors->first('title') }}</strong></span>
+        @endif
+        <br><br>
+        <input type="text" value="{{old('amount',$orderHistory->amount)}}" name="amount" placeholder="Amount">
+        @if ($errors->has('title'))
+        <span><strong class="text-danger">{{ $errors->first('amount') }}</strong></span>
+        @endif
+        <br><br>
+      
+        <input type="radio" value="0" name="status" {{$orderHistory->status=='0'?'checked':''}}>Pending
+        <input type="radio" value="1" name="status" {{$orderHistory->status=='1'?'checked':''}}>Approved
+        <input type="radio" value="2" name="status" {{$orderHistory->status=='2'?'checked':''}}>Paid
+        <br><br>
         <input type="submit" value="Submit">
     </form>
 </div>

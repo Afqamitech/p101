@@ -20,6 +20,18 @@
                       </a>
                   </li>
                   <li class="">
+                      <a class="@if(Request::segment(2)=='manage-order-history') active @endif" href="{{url('admin/manage-order-history')}}">
+                          <i class="fa fa-user"></i>
+                          <span>Order History Master</span>
+                      </a>
+                  </li>
+                  <li class="">
+                      <a class="@if(Request::segment(2)=='manage-global-wallet') active @endif" href="{{url('admin/manage-global-wallet')}}">
+                          <i class="fa fa-user"></i>
+                          <span>Global Wallet Master</span>
+                      </a>
+                  </li>
+                  <li class="">
                       <a class="@if(Request::segment(2)=='manage-pages') active @endif" href="{{url('admin/manage-pages')}}">
                           <i class="fa fa-file-text"></i>
                           <span>Manage CMS Pages</span>

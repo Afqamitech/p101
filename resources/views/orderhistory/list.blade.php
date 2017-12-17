@@ -22,6 +22,7 @@ Order History
                 <th>Status</th>
                 <th>Amount</th>
                 <th>Created At</th>
+                <th>Action</th>
             </tr>
         </thead>
     </table>
@@ -47,6 +48,15 @@ $(document).ready(function () {
             
             {data: 'amount', name: 'amount'},
             {data: 'created_at', name: 'created_at'},
+              {data: "update",
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return '<a class="btn btn-primary" href="{{url("admin/manage-order-history/update/")}}/' + row.id + '"><i class="fa fa-pencil"></i></a>';
+                    }
+                    return data;
+                },
+                className: "dt-body-center"
+            },
             
         ]
     });
