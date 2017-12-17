@@ -35,7 +35,7 @@ class RedeemController extends Controller {
         
         return Datatables::of($redeem)
                         ->addColumn('name', function($redeem ) {
-                            return $redeem->user->userInformation->first_name;
+                            return $redeem->user->name;
                         })
                         ->make(true);
     }
