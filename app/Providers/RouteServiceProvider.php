@@ -141,4 +141,11 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/query.php'));
     }
+    
+    protected function slider()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/slider.php'));
+    }
 }
