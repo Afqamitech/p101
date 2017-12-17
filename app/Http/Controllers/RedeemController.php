@@ -37,7 +37,18 @@ class RedeemController extends Controller {
                         ->addColumn('name', function($redeem ) {
                             return $redeem->user->name;
                         })
+                        ->addColumn('mobile', function($redeem ) {
+                            return $redeem->user->mobile==""?$redeem->user->mobile:'N/A';
+                        })
                         ->make(true);
+    }
+    
+    public function setRedeemStatus(Request $request)
+    {
+        $redeem=Redeem::where('user_id',$request->customer_id)->first();
+//        dd($redeem);
+        $redeem->status=$request->status;
+        $redeem->save();
     }
 
 //    public function createCategory(Request $request)

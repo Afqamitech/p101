@@ -34,6 +34,8 @@ class CouponController extends Controller {
 
     public function couponData() {
         $coupon = Coupon::all();
+        
+        
         return Datatables::of($coupon)
                         ->addColumn('status', function($coupon) {
                             return $coupon->status == '1' ? 'Published' : "Unpublished";
@@ -42,9 +44,11 @@ class CouponController extends Controller {
                             return $coupon->deal_of_the_day == '1' ? 'Yes' : "No";
                         })
                         ->addColumn('category', function($coupon) {
+                            
                             return $coupon->category->name;
                         })
                         ->addColumn('store', function($coupon) {
+                            
                             return $coupon->store->name;
                         })
                         ->make(true);
@@ -74,7 +78,8 @@ class CouponController extends Controller {
             $coupon->name = $request->name;
             $coupon->label = $request->label;
             $coupon->offer_line = $request->offer_line;
-            $coupon->deal_of_the_day = $request->deal_of_the_day;
+            if($request->has('deal_of_the_day'))
+            $coupon->deal_of_the_day = $request->deal_of_the_day ;
             $coupon->expiry_date = $request->expiry_date;
             $coupon->status = $request->status;
             if ($request->hasFile('image')) {
@@ -120,7 +125,9 @@ class CouponController extends Controller {
             $coupon->name = $request->name;
             $coupon->label = $request->label;
             $coupon->offer_line = $request->offer_line;
+            if($request->has('deal_of_the_day')){
             $coupon->deal_of_the_day = $request->deal_of_the_day;
+            }
             $coupon->expiry_date = $request->expiry_date;
             $coupon->status = $request->status;
             if ($request->hasFile('image')) {

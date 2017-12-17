@@ -18,6 +18,8 @@ Redeem Master
                 <th>Id</th>
                 <th>Name</th>
                 <th>Redeem Amount</th>
+                <th>Payment Type</th>
+                <th>Contact No.</th>
                 <th>Status</th>
                 <th>Action</th>
                 <!--<th>Delete</th>-->
@@ -42,13 +44,23 @@ $(document).ready(function () {
             {data: 'name', name: 'name'},
             {data: 'redeem_amount', name: 'redeem_amount'},
 //            {data: 'status', name: 'status'},
-            {data: "status",
+            {data: "payment",
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<select name="status">\n\
-                                <option value="0" @if('+row.status+'=="0") selected @endif>Pending</option>\n\
-                                <option value="1" @if('+row.status+'=="1") selected @endif>Approved</option>\n\
-                                <option value="2" @if('+row.status+'=="2") selected @endif>Paid</option>\n\
+                        return "N/A";
+                    }
+                    return data;
+                },
+                className: "dt-body-center"
+            },
+            {data: 'mobile', name: 'mobile'},
+                {data: "status",
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return '<select name="status" id="status_'+row.user_id+'" onchange="setStatus(this.id)">\n\
+                                <option value="0" if('+row.status+'=="0") selected>Pending</option>\n\
+                                <option value="1" if('+row.status+'=="1") selected>Approved</option>\n\
+                                <option value="2" if('+row.status+'=="2") selected>Paid</option>\n\
                                 </select>';
                     }
                     return data;
@@ -73,8 +85,32 @@ $(document).ready(function () {
                 },
                 className: "dt-body-center"
             }
-        ]
+        ],
+         "columnDefs": [{
+    "defaultContent": "-",
+    "targets": "_all"
+  }]
     });
 });
+
+function setStatus(id) {
+
+        var status = $('#'+id).val();
+        var customer_id = id.slice(7);
+//        alert(customer_id);
+        $.ajax({
+            url: "{{url('/admin/set-status')}}",
+            type: "get", //send it through get method
+            data: {
+                status: status,
+                customer_id: customer_id,
+            },
+            success: function (response) {
+//                console.log(response);
+//                alert('save');
+                
+            },
+        });
+    }
 </script>
 @endsection

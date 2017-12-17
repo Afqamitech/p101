@@ -21,7 +21,11 @@ Coupon
         @endif
         <br><br>
         <input type="text" value="{{old('label')}}" name="label" placeholder="Label">
-        @if ($errors->has('label'))<label>Select Category</label>
+        @if ($errors->has('label'))
+        <br><br>
+        <span><strong class="text-danger">{{ $errors->first('label') }}</strong></span>
+        @endif
+        <label>Select Category</label>
         <select name="category" id="category">
             @foreach($categories as $category)
             <option value="{{$category->id}}" @if(old('category')==$category->id) selected @endif>{{$category->name}}</option>
@@ -37,9 +41,7 @@ Coupon
         @if ($errors->has('store'))
         <span><strong class="text-danger">{{ $errors->first('store') }}</strong></span>
         @endif
-        <br><br>
-        <span><strong class="text-danger">{{ $errors->first('label') }}</strong></span>
-        @endif
+        
         <br><br>
         <input type="text" value="{{old('offer_line')}}" name="offer_line" placeholder="Offer Line">
         @if ($errors->has('offer_line'))

@@ -58,7 +58,11 @@ $(document).ready(function () {
                 className: "dt-body-center"
             },
             
-        ]
+        ],
+         "columnDefs": [{
+    "defaultContent": "-",
+    "targets": "_all"
+  }]
     });
 });
 </script>

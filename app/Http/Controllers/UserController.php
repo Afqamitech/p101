@@ -43,7 +43,13 @@ class UserController extends Controller {
 
                 ->make(true);
     }
-
+public function viewDetail(Request $request, $id) {
+    
+   $user = User::find($id);
+        if ($request->method() == "GET") {
+            return view('users.view', ['user' => $user]);
+        }
+}
     public function updateCategory(Request $request, $id) {
         $category = Category::find($id);
         if ($request->method() == "GET") {

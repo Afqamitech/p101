@@ -49,6 +49,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->query();
         $this->orderHistory();
         $this->slider();
+        $this->globalWallet();
 
         //
     }
@@ -114,6 +115,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/order_history.php'));
+    }
+    protected function globalWallet()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/globalwallet.php'));
     }
     protected function userPages()
     {

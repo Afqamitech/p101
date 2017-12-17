@@ -14,6 +14,7 @@
 //Category  routs
 Route::get('/admin/redeem-master', 'RedeemController@listRedeem')->middleware('auth');
 Route::get('/admin/get-redeem-data', 'RedeemController@redeemData')->middleware('auth');
+Route::get('/admin/set-status', 'RedeemController@setRedeemStatus')->middleware('auth');
 //
 //Route::get('/admin/create-category', 'CategoryController@createCategory')->middleware('auth');
 //Route::post('/admin/create-category', 'CategoryController@createCategory')->middleware('auth');
