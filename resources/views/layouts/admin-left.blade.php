@@ -32,13 +32,13 @@
                       </a>
                   </li>
                   <li class="">
-                      <a class="@if(Request::segment(2)=='manage-pages') active @endif" href="{{url('admin/manage-pages')}}">
+                      <a class="@if(Request::segment(2)=='cms-page') active @endif" href="{{url('admin/cms-page')}}">
                           <i class="fa fa-file-text"></i>
                           <span>Manage CMS Pages</span>
                       </a>
                   </li>
                   <li class="">
-                      <a class="@if(Request::segment(2)=='manage-global-value') active @endif" href="{{url('admin/manage-global-value')}}">
+                      <a class="@if(Request::segment(2)=='global-value') active @endif" href="{{url('admin/global-value')}}">
                           <i class="fa fa-globe"></i>
                           <span>Manage Global Values</span>
                       </a>
@@ -89,7 +89,7 @@
                       </a>
                   </li>
 
-                  <li class="sub-menu">
+<!--                  <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-desktop"></i>
                           <span>UI Elements</span>
@@ -151,7 +151,7 @@
                           <li><a  href="morris.html">Morris</a></li>
                           <li><a  href="chartjs.html">Chartjs</a></li>
                       </ul>
-                  </li>
+                  </li>-->
 
               </ul>
               <!-- sidebar menu end-->

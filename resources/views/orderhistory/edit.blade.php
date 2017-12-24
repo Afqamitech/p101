@@ -6,41 +6,59 @@ Create Order History
 <link href="{{url('public/backend/css/jquery-ui.css')}}" rel="stylesheet">
 <ul class="breadcrumb">
     <li><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-    <li><a href="{{url('admin/manage-category')}}">Order History Master</a></li>
+    <li><a href="{{url('admin/manage-order-history')}}">Order History Master</a></li>
     <li><a href="javascript:void(0)">Update Order History</a></li>
 </ul>
-<h2>Update Order History</h2>
-<hr>
-<div class="info col-md-12">
+<div class="cus-head">
+    <h2>Update Order History</h2>
+</div>
+<div class="info cust-form">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        <div class="row">
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Flingal Id</label>
         <input type="text" value="{{old('flingal_id', $orderHistory->flingal_id)}}" name="flingal_id" placeholder="Flingal Id">
         @if ($errors->has('flingal_id'))
         <span><strong class="text-danger">{{ $errors->first('flingal_id') }}</strong></span>
         @endif
-        <br><br>
+            </div>
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Order Id</label>
         <input type="text" value="{{old('order_id',$orderHistory->order_id)}}" name="order_id" placeholder="Order Id">
         @if ($errors->has('order_id'))
         <span><strong class="text-danger">{{ $errors->first('order_id') }}</strong></span>
         @endif
-        <br><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Title</label>
         <input type="text" value="{{old('title',$orderHistory->title)}}" name="title" placeholder="Title">
         @if ($errors->has('title'))
         <span><strong class="text-danger">{{ $errors->first('title') }}</strong></span>
         @endif
-        <br><br>
+            </div>
+        <div class="col-sm-6 col-xs-12 form-group">
+            <label>Amount</label>
         <input type="text" value="{{old('amount',$orderHistory->amount)}}" name="amount" placeholder="Amount">
         @if ($errors->has('title'))
         <span><strong class="text-danger">{{ $errors->first('amount') }}</strong></span>
         @endif
-        <br><br>
-      
+        </div>
+        </div>
+      <div class="row">
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Status</label><br>
         <input type="radio" value="0" name="status" {{$orderHistory->status=='0'?'checked':''}}>Pending
         <input type="radio" value="1" name="status" {{$orderHistory->status=='1'?'checked':''}}>Approved
         <input type="radio" value="2" name="status" {{$orderHistory->status=='2'?'checked':''}}>Paid
-        <br><br>
-        <input type="submit" value="Submit">
+            </div>
+      </div>
+        <div class="cust-btn">
+            <input type="submit" value="Submit">
+        </div>
     </form>
 </div>
 @endsection

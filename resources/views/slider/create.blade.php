@@ -9,19 +9,25 @@ Slider
     <li><a href="{{url('admin/manage-slider')}}">Manage Slider</a></li>
     <li><a href="javascript:void(0)">Create Slider</a></li>
 </ul>
-<h2>Create Slider</h2>
-<hr>
-<div class="info col-md-12">
+<div class="cus-head">
+    <h2>Create Slider</h2>
+</div>
+<div class="info cust-form">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        <div class="row ">
+            <div class="col-sm-6 col-xs-12 form-group">
         <label>Category Image</label>
         <input type="file" value="{{old('image')}}" name="image">
         @if ($errors->has('image'))
         <span><strong class="text-danger" >{{ $errors->first('image') }}</strong></span>
         @endif
-        <br><br>
-        <input type="submit" value="Submit">
+            </div>
+            </div>
+        <div class="cust-btn">
+            <input type="submit" value="Submit">
+        </div>
     </form>
 </div>
 @endsection

@@ -9,43 +9,57 @@ User Detail
     <li><a href="{{url('admin/manage-users')}}">Users</a></li>
     <li><a href="javascript:void(0)">View Detail</a></li>
 </ul>
-<h2>View Detail</h2>
-<hr>
-<div class="info col-md-12">
+<div class="cus-head">
+    <h2>View Detail</h2>
+</div>
+<div class="info cust-form">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        <div class="row ">
+            <div class="col-sm-6 col-xs-12 form-group">
         <label>Name</label>
         <input type="text" value="{{$user->name}}" readonly>      
-        <br><br>
+            </div>
+        <div class="col-sm-6 col-xs-12 form-group">
         <label>Flingal ID</label>
         <input type="text" value="{{$user->flingal_id}}" readonly>
-        
-        <br><br>
+        </div>
+            </div>
+        <div class="row ">
+            <div class="col-sm-6 col-xs-12 form-group">
         <label>Email</label>
         <input type="text" value="{{$user->email_id}}" readonly>
-        
-        <br><br>
+            </div>
+        <div class="col-sm-6 col-xs-12 form-group">
         <label>Mobile</label>
         <input type="text" value="{{$user->Mobile}}" readonly>
-        
+            </div>
+            </div>
         <h2>Cashback Details</h2>
-
-        <label>Current Flingal Account Balance</label>
+        <div class="row ">
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Current Flingal Account Balance</label>
                 <input type="text" value="{{$user->amount}}" readonly>
-
-       
-        <br><br>
-        
+            </div>
+        <div class="col-sm-6 col-xs-12 form-group">
           <label>Pending Amount</label>
                 <input type="text" value="{{$user->amount}}" readonly>
+        </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-6 col-xs-12 form-group">
           <label>Approved Amount</label>
                 <input type="text" value="{{$user->amount}}" readonly>
+            </div>
+            <div class="col-sm-6 col-xs-12 form-group">
           <label>Paid Amount</label>
                 <input type="text" value="{{$user->amount}}" readonly>
-        <br><br>
-     
-        <input type="button" value="Back" onclick="history.go(-1)">
+            </div>
+            </div>
+     <div class="cust-btn">
+         <input type="button" value="Back" class="btn btn-primary" onclick="history.go(-1)">
+     </div>
     </form>
 </div>
 @endsection

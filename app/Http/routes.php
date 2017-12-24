@@ -53,15 +53,15 @@ Route::get('/admin/get-global-wallet-data', 'GlobalWalletController@globalWallet
 Route::get('/admin/manage-global-wallet/update/{id}/{add}', 'GlobalWalletController@updateGlobalWallet')->middleware('auth');
 Route::post('/admin/manage-global-wallet/update/{id}/{deduct}', 'GlobalWalletController@updateGlobalWallet')->middleware('auth');
 
-//cmg routes
-Route::get('/admin/manage-pages', 'CmspageController@listPages')->middleware('auth');
+//cms routes
+Route::get('/admin/cms-page', 'CmspageController@listPages')->middleware('auth');
 Route::get('/admin/get-cms-page-data', 'CmspageController@dataPages')->middleware('auth');
 
 Route::get('/admin/cms-page/update/{id}', 'CmspageController@updatePage')->middleware('auth');
 Route::post('/admin/cms-page/update/{id}', 'CmspageController@updatePage')->middleware('auth');
 
 //Global Values routs
-Route::get('/admin/manage-global-value', 'GlobalValuesController@listGlobalValues')->middleware('auth');
+Route::get('/admin/global-value', 'GlobalValuesController@listGlobalValues')->middleware('auth');
 Route::get('/admin/get-global-value-data', 'GlobalValuesController@globalValueData')->middleware('auth');
 //
 Route::get('/admin/global-value/update/{id}', 'GlobalValuesController@updateGlobalValue')->middleware('auth');

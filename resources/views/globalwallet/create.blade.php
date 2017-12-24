@@ -9,9 +9,10 @@ Create Order History
     <li><a href="{{url('admin/manage-category')}}">Order History Master</a></li>
     <li><a href="javascript:void(0)">Create Order History</a></li>
 </ul>
-<h2>Create Order History</h2>
-<hr>
-<div class="info col-md-12">
+<div class="cus-head">
+    <h2>Create Order History</h2>
+</div>
+<div class="info cust-form">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>

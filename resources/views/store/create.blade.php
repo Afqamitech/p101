@@ -70,7 +70,7 @@ Store
                 @endif
             </div>
             <div class="col-sm-6 col-xs-12 form-group">
-                <label>Status</label>
+                <label>Status</label><br>
                 <input checked type="radio" value="1" name="status">Publish
                 <input type="radio" value="0" name="status">Unpublish
             </div>
