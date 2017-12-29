@@ -24,6 +24,10 @@ class Coupon extends Model
     {
         return $this->belongsTo('App\Models\Store','store_id','id');
     }
+    public function coupomSubCategory()
+    {
+        return $this->hasMany('App\Models\CouponSubCategory','coupon_id','id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

@@ -69,7 +69,7 @@ class StoreController extends Controller {
 
             $store->name = $request->name;
             $store->cash_back = $request->cash_back;
-            $store->link = $request->link;
+            $store->url = $request->link;
             $store->offer_line = $request->offer_line ? $request->offer_line : "";
             $store->status = $request->status;
             $store->description = $request->description;
@@ -120,7 +120,7 @@ class StoreController extends Controller {
 
             $store->name = $request->name;
             $store->cash_back = $request->cash_back;
-            $store->link = $request->link;
+            $store->url = $request->link;
             $store->offer_line = $request->offer_line ? $request->offer_line : "";
             $store->status = $request->status;
             $store->description = $request->description;

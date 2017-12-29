@@ -45,7 +45,7 @@ Store
             </div>
             <div class="col-sm-6 col-xs-12 form-group">
                 <label>Store Link</label>
-                <input type="text" value="{{old('link',$store->link)}}" name="link" placeholder="Store Link">
+                <input type="text" value="{{old('link',$store->url)}}" name="link" placeholder="Store Link">
                 @if ($errors->has('link'))
                 <span><strong class="text-danger">{{ $errors->first('link') }}</strong></span>
                 @endif

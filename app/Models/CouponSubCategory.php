@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class StoreCategory extends Model
+class CouponSubCategory extends Model
 {
    
     /**
@@ -13,17 +13,10 @@ class StoreCategory extends Model
      * @var array
      */
     protected $fillable = [
-        'store_id','category_id'
+        'name'
     ];
     
-    public function category()
-    {
-        return $this->hasOne('App\Models\Category','id','category_id');
-    }
-    public function stores()
-    {
-        return $this->hasOne('App\Models\Store','id','store_id');
-    }
+    
     /**
      * The attributes that should be hidden for arrays.
      *

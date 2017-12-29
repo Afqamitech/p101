@@ -106,6 +106,7 @@ Route::post('/admin/coupon/update/{id}', 'CouponController@updateCoupon')->middl
 Route::get('/admin/coupon/delete/{id}', 'CouponController@deleteCoupon')->middleware('auth');
 
 Route::get('/get-store', 'CouponController@getStores')->middleware('auth');
+Route::get('/get-sub-category', 'CouponController@getSubCategory')->middleware('auth');
 
 
 // reddem routes
@@ -131,6 +132,8 @@ Route::get('/admin/slider/update/{id}', 'SliderController@updateSlider')->middle
 Route::post('/admin/slider/update/{id}', 'SliderController@updateSlider')->middleware('auth');
 
 Route::get('/admin/slider/delete/{id}', 'SliderController@deleteSlider')->middleware('auth');
+
+Route::get('/get-data', 'SliderController@getData')->middleware('auth');
 
 //Sub Category  routs
 Route::get('/admin/manage-subcategory', 'SubCategoryController@listSubCategory')->middleware('auth');
