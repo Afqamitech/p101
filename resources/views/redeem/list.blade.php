@@ -17,14 +17,14 @@ Redeem Master
             <tr>
                 <th>Id</th>
                 <th>Flingal Id</th>
-                <th>Name</th>
+           
                 <th>Redeem Type<br>(cashback/rewards)</th>
                 <th>Redeem Amount</th>
                 <th>Payment Type</th>
                 <th>Contact No.</th>
                 <th>Status</th>
                 <th>Date</th>
-                <th>Action</th>
+                <!--<th>Action</th>-->
                 <!--<th>Delete</th>-->
             </tr>
         </thead>
@@ -45,7 +45,7 @@ $(document).ready(function () {
         columns: [
             {data: 'id', name: 'id'},
             {data: 'flingal_id', name: 'flingal_id'},
-            {data: 'name', name: 'name'},
+     
             {data: 'redeem_type', name: 'redeem_type'},
             {data: 'redeem_amount', name: 'redeem_amount'},
             {data: 'payment_type', name: 'payment_type'},
@@ -53,7 +53,7 @@ $(document).ready(function () {
                 {data: "status",
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<select name="status" id="status_'+row.user_id+'" onchange="setStatus(this.id)">\n\
+                        return '<select name="status" id="status_'+row.flingal_id+'" onchange="return setStatus('+row.id+',this)">\n\
                                 <option value="0" @if('+row.status+'==0) selected @endif>Pending</option>\n\
                                 <option value="1" @if('+row.status+'==1) selected @endif>Paid</option>\n\
                                 </select>';
@@ -72,34 +72,40 @@ $(document).ready(function () {
 //                },
 //                className: "dt-body-center"
 //            },
-            {data: "delete",
-                render: function (data, type, row) {
-                    if (type === 'display') {
-                        return '<a class="btn btn-danger" href="{{url("admin/category/delete/")}}/' + row.id + '"><i class="fa fa-trash-o"></i></a>';
-                    }
-                    return data;
-                },
-                className: "dt-body-center"
-            }
+//            {data: "delete",
+//                render: function (data, type, row) {
+//                    if (type === 'display') {
+//                        return '<a class="btn btn-danger" href="{{url("admin/category/delete/")}}/' + row.id + '"><i class="fa fa-trash-o"></i></a>';
+//                    }
+//                    return data;
+//                },
+//                className: "dt-body-center"
+//            }
         ]
     });
 });
 
-function setStatus(id) {
+function setStatus(id,ele) {
 
-        var status = $('#'+id).val();
-        var customer_id = id.slice(7);
+
+if(!confirm("Are you sure to change status?"))
+{
+    $(ele).val(0);
+    return false;
+}
+        var status = $(ele).val();
+        
 //        alert(customer_id);
         $.ajax({
             url: "{{url('/admin/set-status')}}",
             type: "get", //send it through get method
             data: {
                 status: status,
-                customer_id: customer_id,
+                id: id,
             },
             success: function (response) {
 //                console.log(response);
-                alert('save');
+                location.reload();
                 
             },
         });

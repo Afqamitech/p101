@@ -12,6 +12,9 @@ Create Order History
 <div class="cus-head">
     <h2>Create Order History</h2>
 </div>
+@if(Session::has('error'))
+<div class="alert alert-danger"><strong>{{Session::get('error')}}</strong></div>
+@endif
 <div class="info cust-form">
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
@@ -40,22 +43,62 @@ Create Order History
         <span><strong class="text-danger">{{ $errors->first('title') }}</strong></span>
         @endif
             </div>
+            
+            
+            
+          
             <div class="col-sm-6 col-xs-12 form-group">
-                <label>Amount</label>
+                <label>Type</label><br>
+                <input checked type="radio" value="1" name="type">Cash Back
+                <input type="radio" value="2" name="type"> Reward
+            </div>
+          
+        </div>
+        
+        <div class="row ">
+            
+            
+            
+            
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Cash Back Amount</label>
         <input type="text" value="{{old('amount')}}" name="amount" placeholder="Amount">
-        @if ($errors->has('title'))
+        @if ($errors->has('amount'))
         <span><strong class="text-danger">{{ $errors->first('amount') }}</strong></span>
         @endif
             </div>
+          
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Sale Amount</label>
+        <input type="text" value="{{old('sale_amount')}}" name="sale_amount" placeholder="Sale Amount">
+        @if ($errors->has('dot'))
+        <span><strong class="text-danger">Please Enter Sale Amount</strong></span>
+        @endif
+        </div>
+            
         </div>
       <div class="row ">
+            
             <div class="col-sm-6 col-xs-12 form-group">
-                <label>Status</label><br>
-        <input checked type="radio" value="0" name="status">Pending
-        <input type="radio" value="1" name="status">Approved
-        <input type="radio" value="2" name="status">Paid
+                <label>Estimated Date of Approval</label>
+                <br>
+        <input type="date" value="{{old('doa')}}" name="doa" placeholder="Date of Approval">
+        @if ($errors->has('dop'))
+        <span><strong class="text-danger">Please Select Estimated Date of Approval</strong></span>
+        @endif
         </div>
+          
+          <div class="col-sm-6 col-xs-12 form-group">
+                <label>Date of Transaction</label>
+                <br>
+        <input type="date" value="{{old('dot')}}" name="dot" placeholder="Date of Transaction">
+        @if ($errors->has('dot'))
+        <span><strong class="text-danger">Please Select Date of Transaction</strong></span>
+        @endif
+        </div>
+          
           </div>
+      
         <div class="cust-btn">
             <input type="submit" value="Submit">
         </div>

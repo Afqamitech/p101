@@ -16,10 +16,19 @@ Create Order History
     <form action="" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}    
         <h4></h4>
+        
+         <div class="row ">
+            <div class="col-sm-6 col-xs-12 form-group">
+                <label>Select Wallet Type</label>
+                &nbsp;&nbsp;&nbsp;<input type="radio" checked="" name="wallet_type" value="1"> Cash-Back <input type="radio" value="2" name="wallet_type"> Rewards
+
+            </div>
+         </div>
         <div class="row ">
             <div class="col-sm-6 col-xs-12 form-group">
-                <label>Current Flingal A/c Amount</label>
-                <input type="text" value="{{$globalwallet->amount}}" readonly>
+                <label>Current Wallet Amount</label>
+                <input type="text" id="current_cb_amount" value="{{$globalwallet->cb_amount}}" readonly>
+                <input type="text" style="display:none" id="current_rewards_amount" value="{{$globalwallet->reward_amount}}" readonly>
 
             </div>
             <div class="col-sm-6 col-xs-12 form-group">
@@ -38,7 +47,16 @@ Create Order History
 @section('footer')
 <script src="{{url('public/backend/js/jquery-ui.js')}}"></script>
 <script>
-
+$("[name='wallet_type']").click(function(){
+    if($(this).val() =='1')
+    {
+        $("#current_cb_amount").show();
+        $("#current_rewards_amount").hide();
+    }else{
+        $("#current_cb_amount").hide();
+        $("#current_rewards_amount").show();
+    }
+})
 </script>
 @endsection
 

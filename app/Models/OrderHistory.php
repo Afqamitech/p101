@@ -13,7 +13,7 @@ class OrderHistory extends Model
      * @var array
      */
     protected $fillable = [
-        'flingal_id','order_id','title', 'status','amount'
+        'flingal_id','order_id','title', 'status','amount','type','dot','doa','sale_amount'
     ];
     
     
