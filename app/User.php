@@ -32,4 +32,9 @@ class User extends Authenticatable
         return $this->hasOne('App\UserInformation');
     }
     
+    public function approvedAmount()
+    {
+        return $this->hasOne('App\Models\GlobalWallet','flingal_id','flingal_id')->where('status',1);
+    }
+    
 }
