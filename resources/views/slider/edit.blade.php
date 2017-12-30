@@ -6,11 +6,11 @@ Category
 <link href="{{url('public/backend/css/jquery-ui.css')}}" rel="stylesheet">
 <ul class="breadcrumb">
     <li><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-    <li><a href="{{url('admin/manage-category')}}">Manage Category</a></li>
-    <li><a href="javascript:void(0)">Update Category</a></li>
+    <li><a href="{{url('admin/manage-slider')}}">Manage Slider</a></li>
+    <li><a href="javascript:void(0)">Update Slider</a></li>
 </ul>
 <div class="cus-head">
-    <h2>Update Category</h2>
+    <h2>Update Slider Image</h2>
 </div>
 <div class="info cust-form">
     <form action="" method="post" enctype="multipart/form-data">
@@ -24,6 +24,7 @@ Category
                 <input type="radio" name="slider_link" value="2" onclick="getData(this.id)" id="store" @if($slider->slider_url==2) checked @endif>Store
             </div>
             <div class="col-sm-6 col-xs-12 form-group">
+                <label id="label"></label>
                 <select id="data" style="display: none" name="data">
                     
                 </select>
@@ -56,7 +57,7 @@ Category
         }
         if($('#store').is(':checked'))
         {
-            parameter='coupon';
+            parameter='store';
         }
         
         if(parameter!='')
@@ -72,6 +73,14 @@ Category
                 console.log(response);
                 $('#data').html('');
                 $('#data').show();
+                if(parameter=="coupon")
+                {
+                    $('#label').text('Select Coupon');
+                }
+                else
+                {
+                    $('#label').text('Select Store');
+                }
                 response.forEach(function (obj, index) {
                 $('#data').append('<option value="' + obj.url + '">' + obj.name + '</option>');
                 })
@@ -85,6 +94,7 @@ function getData(id)
     if(id=='none')
     {
         $('#data').hide();
+        $('#label').text('');
     }
     else if(id=='store')
     {
@@ -107,6 +117,14 @@ function getData(id)
                 console.log(response);
                 $('#data').html('');
                 $('#data').show();
+                if(parameter=="coupon")
+                {
+                    $('#label').text('Select Coupon');
+                }
+                else
+                {
+                    $('#label').text('Select Store');
+                }
                 response.forEach(function (obj, index) {
                 $('#data').append('<option value="' + obj.url + '">' + obj.name + '</option>');
                 })

@@ -32,6 +32,7 @@ Slider
             </div>
         <div class="row ">
             <div class="col-sm-6 col-xs-12 form-group">
+                <label id="label"></label>
                 <select id="data" style="display: none" name="data">
                     
                 </select>
@@ -51,6 +52,7 @@ function getData(id)
     if(id=='none')
     {
         $('#data').hide();
+        $('#label').text('');
     }
     else if(id=='store')
     {
@@ -73,6 +75,14 @@ function getData(id)
                 console.log(response);
                 $('#data').html('');
                 $('#data').show();
+                if(parameter=="coupon")
+                {
+                    $('#label').text('Select Coupon');
+                }
+                else
+                {
+                    $('#label').text('Select Store');
+                }
                 response.forEach(function (obj, index) {
                 $('#data').append('<option value="' + obj.url + '">' + obj.name + '</option>');
                 })

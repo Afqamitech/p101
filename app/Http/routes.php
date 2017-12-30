@@ -81,17 +81,23 @@ Route::post('/admin/store/update/{id}', 'StoreController@updateStore')->middlewa
 
 Route::get('/admin/store/delete/{id}', 'StoreController@deleteStore')->middleware('auth');
 
+Route::get('/admin/delete/cash-back/{id}', 'StoreController@deleteStoreCashbackrates')->middleware('auth');
+
 //Category  routs
 Route::get('/admin/manage-category', 'CategoryController@listCategory')->middleware('auth');
 Route::get('/admin/get-category-data', 'CategoryController@categoryData')->middleware('auth');
 
-Route::get('/admin/create-category', 'CategoryController@createCategory')->middleware('auth');
-Route::post('/admin/create-category', 'CategoryController@createCategory')->middleware('auth');
-////
-Route::get('/admin/category/update/{id}', 'CategoryController@updateCategory')->middleware('auth');
-Route::post('/admin/category/update/{id}', 'CategoryController@updateCategory')->middleware('auth');
+//Promotional category routs
+Route::get('/admin/promotional-category', 'PromotionalCategoryController@listCategory')->middleware('auth');
+Route::get('/admin/get-promotional-category-data', 'PromotionalCategoryController@categoryData')->middleware('auth');
 
-Route::get('/admin/category/delete/{id}', 'CategoryController@deleteCategory')->middleware('auth');
+Route::get('/admin/promotional-category/create', 'PromotionalCategoryController@createCategory')->middleware('auth');
+Route::post('/admin/promotional-category/create', 'PromotionalCategoryController@createCategory')->middleware('auth');
+////
+Route::get('/admin/promotional-category/update/{id}', 'PromotionalCategoryController@updateCategory')->middleware('auth');
+Route::post('/admin/promotional-category/update/{id}', 'PromotionalCategoryController@updateCategory')->middleware('auth');
+
+Route::get('/admin/promotional-category/delete/{id}', 'PromotionalCategoryController@deleteCategory')->middleware('auth');
 
 
 //Coupan  routs
@@ -132,6 +138,7 @@ Route::get('/admin/slider/update/{id}', 'SliderController@updateSlider')->middle
 Route::post('/admin/slider/update/{id}', 'SliderController@updateSlider')->middleware('auth');
 
 Route::get('/admin/slider/delete/{id}', 'SliderController@deleteSlider')->middleware('auth');
+Route::get('/get-data', 'SliderController@getData')->middleware('auth');
 
 //Sub Category  routs
 Route::get('/admin/manage-subcategory', 'SubCategoryController@listSubCategory')->middleware('auth');

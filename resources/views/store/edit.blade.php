@@ -57,14 +57,21 @@ Store
                 <input type="text" value="{{old('offer_line',$store->offer_line)}}" name="offer_line" placeholder="Store Offer Line" accept="image/*">
             </div>
             <div class="col-sm-6 col-xs-12 form-group">
-                <label>Store Cash-Back Rate</label>
-                <input type="text" name="cash_back" value="{{old('cash_back',$store->cash_back)}}">
+                <label>Store Description</label>
+                <textarea name="description">{{old('description',$store->description)}}</textarea>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6 col-xs-12 form-group">
-                <label>Store Description</label>
-                <textarea name="description">{{old('description',$store->description)}}</textarea>
+                <label>Store Cash-back Rate</label>
+                <table id="table">
+                    @if($store->storeCashbackRates)
+                    @foreach($store->storeCashbackRates as $cash_back)
+                    <tr><td><input type="text" name="cash_back[]" value="{{old('cash_back',$cash_back->cash_back)}}" placeholder="cash-back rate"></td><td><a class="btn btn-danger" href="{{url('/admin/delete/cash-back/'.$cash_back->id)}}"><i class="fa fa-trash"></i></a></td></tr>
+                    @endforeach
+                    @endif
+                </table>
+                <button type="button" class="btn btn-primary" id="add_cash">Add More</button>
             </div>
         </div>
         <div class="row">
@@ -88,4 +95,17 @@ Store
     </form>
 </div>
 @endsection
+@section('footer')
+<script>
+    var cnt=100;
+$('#add_cash').click(function(){
+    $('#table').append('<tr id="'+cnt+'"><td><input type="text" name="cash_back[]" value="{{old("cash_back")}}" placeholder="cash-back rate"></td><td><button type="button" class="btn btn-danger" onclick="removeCash(parentNode.parentNode.id)"><i class="fa fa-trash"></i></button></td></tr>');
+    cnt++;
+})    
 
+function removeCash(id)
+{
+    $('#'+id).remove();
+}
+</script>
+@endsection

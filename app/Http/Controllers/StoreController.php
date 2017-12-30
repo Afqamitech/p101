@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Models\Store;
+use App\Models\StoreCashbackRate;
 use Validator;
 use Image;
 use App\Models\Category;
@@ -68,11 +69,11 @@ class StoreController extends Controller {
             $store = new Store();
 
             $store->name = $request->name;
-            $store->cash_back = $request->cash_back;
             $store->url = $request->link;
             $store->offer_line = $request->offer_line ? $request->offer_line : "";
             $store->status = $request->status;
             $store->description = $request->description;
+            
             if ($request->hasFile('image')) {
                 $photo = $request->file('image');
                 $ext = $request->image->getClientOriginalExtension();
@@ -88,6 +89,14 @@ class StoreController extends Controller {
                 $store->image = $new_name;
             }
             $store->save();
+            
+            if($request->cash_back)
+            {
+                foreach($request->cash_back as $cash_back)
+                {
+                    StoreCashbackRates::create(['store_id'=>$store->id,'cash_back'=>$cash_back]);
+                }
+            }
 
             foreach ($request->category as $category) {
                 $store_category = new StoreCategory();
@@ -102,6 +111,7 @@ class StoreController extends Controller {
     public function updateStore(Request $request, $id) {
         $store = Store::find($id);
         if ($request->method() == "GET") {
+//            $store->storeCashbackRates
             $category = Category::all();
             return view('store.edit', ['store' => $store, 'categories' => $category]);
         } else {
@@ -119,7 +129,6 @@ class StoreController extends Controller {
             }
 
             $store->name = $request->name;
-            $store->cash_back = $request->cash_back;
             $store->url = $request->link;
             $store->offer_line = $request->offer_line ? $request->offer_line : "";
             $store->status = $request->status;
@@ -146,6 +155,16 @@ class StoreController extends Controller {
                 $store_category->store_id = $store->id;
                 $store_category->save();
             }
+            
+            StoreCashbackRate::where('store_id',$store->id)->delete();
+            if($request->cash_back)
+            {
+                foreach($request->cash_back as $cash_back)
+                {
+                    StoreCashbackRate::create(['store_id'=>$store->id,'cash_back'=>$cash_back]);
+                }
+            }
+            
             return redirect('admin/manage-store')->with('success', 'Store Added Successfully!');
         }
     }
@@ -155,6 +174,14 @@ class StoreController extends Controller {
         $store_category = StoreCategory::where('store_id', $store->id)->delete();
         $store->delete();
         return redirect('admin/manage-store')->with('success', 'Store deleted successfully!');
+    }
+    
+    public function deleteStoreCashbackrates($id)
+    {
+        $cash_back=StoreCashbackRate::find($id);
+        $id=$cash_back->store_id;
+        $cash_back->delete();
+        return redirect('/admin/store/update/'.$id);
     }
 
 }
