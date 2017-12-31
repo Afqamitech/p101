@@ -38,19 +38,15 @@ class UserController extends Controller {
     }
 
     public function userData(Request $request) {
-        
-        
         $users = \App\User::where('user_type','2')->get();
-        
-        
-       
         return Datatables::of($users)
-
                 ->make(true);
     }
 public function viewDetail(Request $request, $id) {
     
    $user = User::find($id);
+   
+   
         if ($request->method() == "GET") {
             return view('users.view', ['user' => $user]);
         }
