@@ -15,12 +15,11 @@ Coupon
     <table id="users" class="table table-hover table-condensed" style="width:100%">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Deal of the day</th>
                 <th>Coupon Name</th>
                 <th>Category</th>
                 <th>Store</th>
                 <th>Label</th>
-                <th>Deal of the day</th>
                 <th>Expiry Date</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -42,12 +41,20 @@ $(document).ready(function () {
         serverSide: true,
         ajax: "{{ url('/admin/get-coupon-data') }}",
         columns: [
-            {data: 'id', name: 'id'},
+//            {data: "top_deal",
+//                render: function (data, type, row) {
+//                    if (type === 'display') {
+//                        return '<input type="checkbox" checked value="'row.id'">';
+//                    }
+//                    return data;
+//                },
+//                className: "dt-body-center"
+//            },
+            {data: 'top_deal', name: 'top_deal'},
             {data: 'name', name: 'name'},
             {data: 'category', name: 'category'},
             {data: 'store', name: 'store'},
             {data: 'label', name: 'label'},
-            {data: 'deal_of_the_day', name: 'deal_of_the_day'},
             {data: 'expiry_date', name: 'expiry_date'},
             {data: 'status', name: 'status'},
             {data: "update",
@@ -75,5 +82,47 @@ $(document).ready(function () {
   }]
     });
 });
+
+function setTopDeal(val)
+{
+    $.ajax({
+            url: "{{url('/set-top-deal')}}",
+            type: "get", //send it through get method
+            dataType: "json", //send it through get method
+            data: {
+                coupon_id: val,
+            },
+            success: function (response) {
+                console.log(response);
+            },
+        });
+}
+
+function setStatus(id)
+{
+    if($('#'+id).text()=='Publish')
+    {
+        $('#'+id).text('Unpublish');
+        $('#'+id).removeClass('label-success');
+        $('#'+id).addClass('label-danger');
+    }
+    else
+    {
+        $('#'+id).text('Publish');
+        $('#'+id).removeClass('label-danger');
+        $('#'+id).addClass('label-success');
+    }
+    $.ajax({
+            url: "{{url('/set-status')}}",
+            type: "get", //send it through get method
+            dataType: "json", //send it through get method
+            data: {
+                coupon_id: id,
+            },
+            success: function (response) {
+                console.log(response);
+            },
+        });
+}
 </script>
 @endsection

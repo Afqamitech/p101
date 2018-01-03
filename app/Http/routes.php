@@ -99,6 +99,8 @@ Route::post('/admin/promotional-category/update/{id}', 'PromotionalCategoryContr
 
 Route::get('/admin/promotional-category/delete/{id}', 'PromotionalCategoryController@deleteCategory')->middleware('auth');
 
+Route::get('/admin/delete/data/{id}', 'PromotionalCategoryController@deleteData')->middleware('auth');
+
 
 //Coupan  routs
 Route::get('/admin/manage-coupon', 'CouponController@listCoupon')->middleware('auth');
@@ -113,6 +115,10 @@ Route::post('/admin/coupon/update/{id}', 'CouponController@updateCoupon')->middl
 Route::get('/admin/coupon/delete/{id}', 'CouponController@deleteCoupon')->middleware('auth');
 
 Route::get('/get-store', 'CouponController@getStores')->middleware('auth');
+Route::get('/get-sub-category', 'CouponController@getSubCategory')->middleware('auth');
+Route::get('/set-top-deal', 'CouponController@setTopDeal')->middleware('auth');
+Route::get('/set-status', 'CouponController@setstatus')->middleware('auth');
+
 
 
 // reddem routes

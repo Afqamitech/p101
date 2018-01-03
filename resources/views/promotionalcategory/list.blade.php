@@ -18,8 +18,8 @@ Category
                 <th>Id</th>
                 <th>Name</th>
                 <!--<th>Featured</th>-->
-<!--                <th>Status</th>
-                <th>Action</th>
+                <th>Status</th>
+<!--                <th>Action</th>
                 <th>Delete</th>-->
             </tr>
         </thead>

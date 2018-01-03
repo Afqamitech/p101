@@ -36,13 +36,18 @@ class CouponController extends Controller {
     public function couponData() {
         $coupon = Coupon::all();
         
-        
         return Datatables::of($coupon)
-                        ->addColumn('status', function($coupon) {
-                            return $coupon->status == '1' ? 'Published' : "Unpublished";
+                        ->addColumn('top_deal', function($coupon) {
+                            if($coupon->top_deal)
+                                return '<input type="checkbox" value="'.$coupon->id.'" checked onclick="setTopDeal(this.value)">';
+                            else
+                                return '<input type="checkbox" value="'.$coupon->id.'" onclick="setTopDeal(this.value)">';
                         })
-                        ->addColumn('deal_of_the_day', function($coupon) {
-                            return $coupon->deal_of_the_day == '1' ? 'Yes' : "No";
+                        ->addColumn('status', function($coupon) {
+                            if($coupon->status)
+                                return '<label id="'.$coupon->id.'" onclick="setStatus(this.id)" class="label label-success">Publish</label>';
+                            else
+                                return '<label id="'.$coupon->id.'" onclick="setStatus(this.id)" class="label label-danger">Unpublish</label>';
                         })
                         ->addColumn('category', function($coupon) {
                             
@@ -85,14 +90,16 @@ class CouponController extends Controller {
             $coupon->expiry_date = $request->expiry_date;
             $coupon->save();
             
-            foreach($request->sub_category as $sub_category)
+            if($request->sub_category)
             {
-                $coupon_sub_category=  new CouponSubCategory();
-                $coupon_sub_category->coupon_id = $coupon->id;
-                $coupon_sub_category->sub_category_id = $sub_category;
-                $coupon_sub_category->save();
+                foreach($request->sub_category as $sub_category)
+                {
+                    $coupon_sub_category=  new CouponSubCategory();
+                    $coupon_sub_category->coupon_id = $coupon->id;
+                    $coupon_sub_category->sub_category_id = $sub_category;
+                    $coupon_sub_category->save();
+                }
             }
-            
             return redirect('admin/manage-coupon')->with('success', 'Coupon Added Successfully!');
         }
     }
@@ -168,5 +175,18 @@ class CouponController extends Controller {
         $sub_category=  \App\Models\SubCategory::where('category_id',$request->category_id)->get();
         return $sub_category;
     }
-
+    
+    public function setTopDeal(Request $request)
+    {
+        $coupon=  Coupon::find($request->coupon_id);
+        $coupon->top_deal==0?$coupon->top_deal=1:$coupon->top_deal=0;
+        $coupon->save();
+    }
+        
+    public function setstatus(Request $request)
+    {
+        $coupon=  Coupon::find($request->coupon_id);
+        $coupon->status==0?$coupon->status=1:$coupon->status=0;
+        $coupon->save();
+    }
 }

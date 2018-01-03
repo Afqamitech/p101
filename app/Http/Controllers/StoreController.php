@@ -40,12 +40,6 @@ class StoreController extends Controller {
                         ->addColumn('status', function($store) {
                             return $store->status == '1' ? 'Published' : "Unpublished";
                         })
-                        ->addColumn('category', function($store) {
-                            foreach ($store->storeCategory as $index => $store_category) {
-                                $category[$index] = $store_category->category->name;
-                            }
-                            return $category;
-                        })
                         ->make(true);
     }
 
@@ -94,7 +88,7 @@ class StoreController extends Controller {
             {
                 foreach($request->cash_back as $cash_back)
                 {
-                    StoreCashbackRates::create(['store_id'=>$store->id,'cash_back'=>$cash_back]);
+                    StoreCashbackRate::create(['store_id'=>$store->id,'cash_back'=>$cash_back]);
                 }
             }
 

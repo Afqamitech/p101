@@ -68,7 +68,7 @@ Coupon
                 @foreach($sub_categories as $sub_category)
                 <input type="checkbox" name="sub_category[]" value="{{$sub_category->id}}" 
                        @foreach($coupon->coupomSubCategory as $coupon_sub_category)
-                       @if($sub_category->id==$coupon_sub_category->id)
+                       @if($sub_category->id==$coupon_sub_category->sub_category_id)
                        checked
                        @endif
                        @endforeach

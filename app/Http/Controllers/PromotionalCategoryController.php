@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Models\Category;
+use App\Models\PromotionalCategory;
+use App\Models\PromotionalCategoryData;
 use Validator;
 use Image;
 
@@ -31,10 +33,10 @@ class PromotionalCategoryController extends Controller {
     }
 
     public function categoryData() {
-        $global_value = Category::all();
-        return Datatables::of($global_value)
-                        ->addColumn('status', function($cms) {
-                            return $cms->status == '1' ? 'Published' : "Unpublished";
+        $categories = PromotionalCategory::all();
+        return Datatables::of($categories)
+                        ->addColumn('status', function($category) {
+                            return $category->status == '1' ? 'Published' : "Unpublished";
                         })
                         ->make(true);
     }
@@ -51,6 +53,7 @@ class PromotionalCategoryController extends Controller {
                         'name' => 'required',
                         'icon' => 'required',
                         'image' => 'required',
+                        'title' => 'required',
             ]);
              if ($validator->fails()) {
             return redirect()->back()
@@ -58,10 +61,9 @@ class PromotionalCategoryController extends Controller {
                         ->withInput();
             }
             
-            $category=  new Category();
+            $category=  new PromotionalCategory();
             $category->name=$request->name;
             $category->icon=$request->icon;
-            $category->is_featured=$request->is_featured? $request->is_featured:'0';
             $category->status=$request->status;
             if ($request->hasFile('image')) {
                 $photo = $request->file('image');
@@ -82,14 +84,29 @@ class PromotionalCategoryController extends Controller {
                 $category->image=$new_name;
             }
             $category->save();
-            return redirect('admin/manage-category')->with('success','Category Added Successfully!');
+            if($request->values_id)
+            {
+                foreach($request->values_id as $index=>$data)
+                {
+                    $arr['promotional_category_id']=$category->id;
+                    $arr['type']=$request->type;
+                    $arr['store_id']=$request->type==1?$data:'';
+                    $arr['coupon_id']=$request->type==0?$data:'';
+                    $arr['old_value']=$request->old[$index];
+                    $arr['new_value']=$request->new[$index];
+
+                    PromotionalCategoryData::create($arr);
+                }
+            }
+            
+            return redirect('/admin/promotional-category')->with('success','Promotional Category Added Successfully!');
         }
     }
 
     public function updateCategory(Request $request, $id) {
-        $category = Category::find($id);
+        $category = PromotionalCategory::find($id);
         if ($request->method() == "GET") {
-            return view('category.edit', ['category' => $category]);
+            return view('promotionalcategory.edit', ['category' => $category]);
         } else {
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
@@ -126,6 +143,20 @@ class PromotionalCategoryController extends Controller {
             }
             $category->save();
             
+            if($request->values_id)
+            {
+                foreach($request->values_id as $index=>$data)
+                {
+                    $arr['promotional_category_id']=$category->id;
+                    $arr['type']=$request->type;
+                    $arr['store_id']=$request->type==1?$data:'';
+                    $arr['coupon_id']=$request->type==0?$data:'';
+                    $arr['old_value']=$request->old[$index];
+                    $arr['new_value']=$request->new[$index];
+
+                    PromotionalCategoryData::create($arr);
+                }
+            }
             return redirect('admin/manage-category');
         }
     }
@@ -150,6 +181,14 @@ class PromotionalCategoryController extends Controller {
             $category->is_featured=1;
         }
         $category->save();
+    }
+    
+    public function deleteData($id)
+    {
+        $category=PromotionalCategory::find($id);
+        $id=$category->promotional_category_id;
+        $category->delete();
+        return redirect('/admin/promotional-category/update/'.$id);
     }
 
 }
