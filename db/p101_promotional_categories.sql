@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2017 at 05:37 PM
+-- Generation Time: Jan 03, 2018 at 10:37 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -25,34 +25,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `p101_sliders`
+-- Table structure for table `p101_promotional_categories`
 --
 
-CREATE TABLE `p101_sliders` (
+CREATE TABLE `p101_promotional_categories` (
   `id` int(11) NOT NULL,
-  `slider_url` enum('0','1','2') NOT NULL COMMENT '0=>none,1=>coupon,2=>store',
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `url` varchar(255) NOT NULL,
+  `status` enum('0','1') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `p101_sliders`
+-- Dumping data for table `p101_promotional_categories`
 --
 
-INSERT INTO `p101_sliders` (`id`, `slider_url`, `image`, `url`, `created_at`, `updated_at`) VALUES
-(2, '0', '1513525852.jpg', '', '2017-12-17 10:20:53', '2017-12-17 10:20:53'),
-(3, '1', '1514249227.jpg', 'sdfgdsfg', '2017-12-30 14:02:06', '2017-12-30 08:32:06');
+INSERT INTO `p101_promotional_categories` (`id`, `name`, `icon`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(5, 'www', 'fa-arrow-circle-down', '1514681417.jpg', '1', '2017-12-30 19:20:17', '2017-12-30 19:20:17'),
+(6, 'gggg', 'fa-address-card', '1514681453.jpg', '1', '2017-12-30 19:20:53', '2017-12-30 19:20:53');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `p101_sliders`
+-- Indexes for table `p101_promotional_categories`
 --
-ALTER TABLE `p101_sliders`
+ALTER TABLE `p101_promotional_categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -60,10 +61,10 @@ ALTER TABLE `p101_sliders`
 --
 
 --
--- AUTO_INCREMENT for table `p101_sliders`
+-- AUTO_INCREMENT for table `p101_promotional_categories`
 --
-ALTER TABLE `p101_sliders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `p101_promotional_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

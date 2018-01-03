@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2017 at 05:36 PM
+-- Generation Time: Jan 03, 2018 at 10:37 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -25,32 +25,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `p101_store_cashback_rates`
+-- Table structure for table `p101_promotional_category_datas`
 --
 
-CREATE TABLE `p101_store_cashback_rates` (
+CREATE TABLE `p101_promotional_category_datas` (
   `id` int(11) NOT NULL,
+  `promotional_category_id` int(11) NOT NULL,
+  `type` enum('0','1') NOT NULL COMMENT '0=>coupon,1=>store',
   `store_id` int(11) NOT NULL,
-  `cash_back` varchar(255) NOT NULL,
+  `coupon_id` int(11) NOT NULL,
+  `old_value` varchar(255) NOT NULL,
+  `new_value` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `p101_store_cashback_rates`
+-- Dumping data for table `p101_promotional_category_datas`
 --
 
-INSERT INTO `p101_store_cashback_rates` (`id`, `store_id`, `cash_back`, `created_at`, `updated_at`) VALUES
-(5, 6, 'vvvvvvwersdf', '2017-12-30 10:09:43', '2017-12-30 10:09:43');
+INSERT INTO `p101_promotional_category_datas` (`id`, `promotional_category_id`, `type`, `store_id`, `coupon_id`, `old_value`, `new_value`, `created_at`, `updated_at`) VALUES
+(4, 5, '0', 0, 5, '12', '54', '2017-12-30 19:20:17', '2017-12-30 19:20:17'),
+(5, 6, '1', 6, 0, '45', '99', '2017-12-30 19:20:53', '2017-12-30 19:20:53');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `p101_store_cashback_rates`
+-- Indexes for table `p101_promotional_category_datas`
 --
-ALTER TABLE `p101_store_cashback_rates`
+ALTER TABLE `p101_promotional_category_datas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -58,9 +63,9 @@ ALTER TABLE `p101_store_cashback_rates`
 --
 
 --
--- AUTO_INCREMENT for table `p101_store_cashback_rates`
+-- AUTO_INCREMENT for table `p101_promotional_category_datas`
 --
-ALTER TABLE `p101_store_cashback_rates`
+ALTER TABLE `p101_promotional_category_datas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
