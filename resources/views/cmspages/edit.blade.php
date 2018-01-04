@@ -6,7 +6,7 @@ CMS Pages
 <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
 <ul class="breadcrumb">
     <li><a href="{{url('admin/dashboard')}}">Dashboard</a></li>
-    <li><a href="{{url('admin/cms-pages')}}">Manage CMS Pages</a></li>
+    <li><a href="{{url('admin/cms-page')}}">Manage CMS Pages</a></li>
     <li><a href="javascript:void(0)">Edit CMS Pages</a></li>
 </ul>
 <div class="cus-head">

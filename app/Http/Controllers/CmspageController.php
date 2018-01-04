@@ -56,7 +56,7 @@ class CmspageController extends Controller {
             $cms_page->description=$request->description;
             $cms_page->save();
             
-            return redirect('admin/manage-pages');
+            return redirect('admin/cms-page');
         }
     }
 

@@ -56,7 +56,7 @@ class GlobalValuesController extends Controller {
             $global_value->value=$request->value;
             $global_value->save();
             
-            return redirect('admin/manage-global-value');
+            return redirect('admin/global-value');
         }
     }
 
