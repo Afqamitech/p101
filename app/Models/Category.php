@@ -20,6 +20,10 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Store','category_id','id');
     }
+    public function storeCategories()
+    {
+        return $this->hasMany('App\Models\StoreCategory','category_id','id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

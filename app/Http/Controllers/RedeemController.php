@@ -31,18 +31,11 @@ class RedeemController extends Controller {
     }
 
     public function redeemData() {
-        $redeem = Redeem::all();
+        $redeem = Redeem::where('status',0)->get();
         
         return Datatables::of($redeem)
-                        ->addColumn('name', function($redeem ) {
-                            return $redeem->user->name;
-                        })
-                        ->addColumn('flingal_id', function($redeem ) {
-                            return $redeem->user->flingal_id;
-                        })
-                        ->addColumn('mobile', function($redeem ) {
-                            return $redeem->user->mobile==""?$redeem->user->mobile:'Not available';
-                        })
+                        
+                        
                         ->addColumn('redeem_type', function($redeem ) {
                             return $redeem->redeem_type==0?'Cash-Back':'Rewards';
                         })
@@ -59,11 +52,23 @@ class RedeemController extends Controller {
     
     public function setRedeemStatus(Request $request)
     {
-        $redeem=Redeem::where('user_id',$request->customer_id)->first();
-//        dd($redeem);
+        $redeem=Redeem::find($request->id);
         $redeem->status=$request->status;
         $redeem->save();
+        
+        
+         $globalwallet = \App\Models\GlobalWallet::where('flingal_id',$redeem->flingal_id)->first();
+         
+         if ($redeem->redeem_type == 0) {
+            $globalwallet->cb_amount = $globalwallet->cb_amount - $redeem->redeem_amount;
+        } else {
+            $globalwallet->reward_amount = $globalwallet->reward_amount - $redeem->redeem_amount;
+        }
+        
+        $globalwallet->save();
+        echo 1;
     }
+    
 
 //    public function createCategory(Request $request)
 //    {

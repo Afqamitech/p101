@@ -23,6 +23,10 @@ class Store extends Model
     {
         return $this->hasMany('App\Models\StoreCategory','store_id','id');
     }
+    public function storeCashbackRates()
+    {
+        return $this->hasMany('App\Models\StoreCashbackRate','store_id','id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

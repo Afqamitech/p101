@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Models\OrderHistory;
+use App\Models\GlobalWallet;
 use Validator;
 use Session;
 
@@ -32,14 +33,63 @@ class OrderHistoryController extends Controller {
     }
 
     public function orderHistoryData() {
-        $order_history_data = OrderHistory::all();
+        $order_history_data = OrderHistory::orderBy('id','DESC')->where('status',0)->get();
+        
+        
         return Datatables::of($order_history_data)
                         ->addColumn('status', function($cms) {
-                            return ($cms->status == 0) ? 'Pending' : "Approved";
+                            if($cms->status==0)
+                            {
+                            $str="<select onchange='return changeStatus(this,$cms->id)'>";
+                            $str.="<option value='0'".($cms->status==0?'selected':'')." >Pending</option>";
+                            $str.="<option value='1' ".($cms->status==1?'selected':'').">Approved</option>";
+                            $str.="<option value='2' ".($cms->status==2?'selected':'').">Rejected</option>";
+                            $str.="</select>";
+                            return $str;
+                            
+                            }else{
+                                return $cms->status==1?'Approved':'Rejected';
+                            }
                         })
                         ->make(true);
     }
 
+    
+    public function changeStatus(Request $request){
+        
+        $orderHistory = OrderHistory::find($request->id);
+        
+        if($request->status == 1)
+        {
+        $globalWallet = GlobalWallet::where('flingal_id',$orderHistory->flingal_id)->where('status',1)->first();
+        if($globalWallet)
+        {
+            //update record
+            //check for amount type
+            //1=>cashback, 2=>rewards
+                if($orderHistory->type==1)
+                {
+                    $globalWallet->cb_amount += $orderHistory->amount;
+                }else{
+                    $globalWallet->reward_amount += $orderHistory->amount;
+                }
+                    $globalWallet->save();
+        }else{
+            //create new record
+          $globalWallet= new GlobalWallet();
+          $globalWallet->flingal_id = $orderHistory->flingal_id;
+          $globalWallet->status = 1;
+           if ($orderHistory->type == 1) {
+                $globalWallet->cb_amount += $orderHistory->amount;
+            } else {
+                $globalWallet->reward_amount += $orderHistory->amount;
+            }
+            $globalWallet->save();
+        }
+        }
+        echo OrderHistory::where('id',$request->id)->update(['status'=>$request->status]);
+    }
+    
     public function createOrderHistory(Request $request)
     {
         if($request->method()=="GET")

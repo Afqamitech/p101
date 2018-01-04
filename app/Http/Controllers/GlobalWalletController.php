@@ -26,22 +26,33 @@ class GlobalWalletController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function listGlobalWallet() {
-        return view('globalwallet.list');
+    public function listGlobalWallet(Request $request) {
+        
+        $globalwallet =null;
+        if($request->has('search'))
+        {
+            $globalwallet = \App\Models\GlobalWallet::where('status',1)->where('flingal_id','like',"%".$request->search."%")->get();
+            
+        }
+        return view('globalwallet.list',['globalwallet'=>$globalwallet,'request'=>$request]);
     }
 
     public function globalWalletData() {
-        $globalwallet = User::where('user_type','2')->get();
+        $globalwallet = \App\Models\GlobalWallet::where('status',1)->get();
         
         return Datatables::of($globalwallet)
-                       
-                        ->make(true);
+                        ->addColumn('amount', function($obj) {
+                            
+                           
+                            return $obj->reward_amount + $obj->cb_amount +  $obj->refral_amount;
+                            
+                        })->make(true);
     }
 
  
 
     public function updateGlobalWallet(Request $request, $id, $flag) {
-        $globalwallet = User::find($id);
+        $globalwallet = \App\Models\GlobalWallet::find($id);
         if ($request->method() == "GET") {
             return view('globalwallet.edit', ['globalwallet' => $globalwallet,'flag'=>$flag]);
         } else {
@@ -55,13 +66,24 @@ class GlobalWalletController extends Controller {
                         ->withInput();
         }
         
+        
+        
           if($flag=="add")
           {
-          $globalwallet->amount=$globalwallet->amount + $request->amount;
-          
-          }else{
-          $globalwallet->amount= $globalwallet->amount - $request->amount;
               
+              if($request->wallet_type==1)
+              {
+                $globalwallet->cb_amount=$globalwallet->cb_amount + $request->amount;
+              }else{
+                $globalwallet->reward_amount=$globalwallet->reward_amount + $request->amount;  
+              }
+          }else{
+            if($request->wallet_type==1)
+              {
+                $globalwallet->cb_amount=$globalwallet->cb_amount - $request->amount;
+              }else{
+                $globalwallet->reward_amount=$globalwallet->reward_amount - $request->amount;  
+              }
           }
             $globalwallet->save();
             

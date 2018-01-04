@@ -20,6 +20,10 @@ class StoreCategory extends Model
     {
         return $this->hasOne('App\Models\Category','id','category_id');
     }
+    public function stores()
+    {
+        return $this->hasOne('App\Models\Store','id','store_id');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

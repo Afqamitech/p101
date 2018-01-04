@@ -16,13 +16,15 @@ Order History
     <table id="users" class="table table-hover table-condensed" style="width:100%">
         <thead>
             <tr>
-                <th>Id</th>
+                
+                <th >ID</th>
                 <th>Flingal Id</th>
                 <th>Order Id</th>
                 <th>Title</th>
-                <th>Status</th>
+               
                 <th>Amount</th>
                 <th>Created At</th>
+                 <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -39,16 +41,18 @@ $(document).ready(function () {
     $('#users').DataTable({
         processing: true,
         serverSide: true,
+        "order": [[ 0, "desc" ]],
         ajax: "{{ url('/admin/get-order-history-data') }}",
         columns: [
             {data: 'id', name: 'id'},
             {data: 'flingal_id', name: 'flingal_id'},
             {data: 'order_id', name: 'order_id'},
             {data: 'title', name: 'title'},
-            {data: 'status', name: 'status'},
+       
             
             {data: 'amount', name: 'amount'},
             {data: 'created_at', name: 'created_at'},
+                 {data: 'status', name: 'status'},
               {data: "update",
                 render: function (data, type, row) {
                     if (type === 'display') {
@@ -66,5 +70,35 @@ $(document).ready(function () {
   }]
     });
 });
+
+
+function changeStatus(ele, id)
+{
+    if(!confirm("Are you sure to change status?"))
+    {
+        return false;
+    }
+    
+    var data={
+        status:$(ele).val(),
+        id:id
+    }
+     $.ajax({
+         url: "{{url('admin/manage-order-history/change-status')}}", 
+         data:data,
+         type:'post',
+         success: function(result){
+             
+             if($(ele).val() == 1)
+             {
+                 $(ele).parent().html("Approved")
+             }else{
+                 $(ele).parent().html("Rejected")
+             }
+             location.reload();
+    }});
+
+return true;
+}
 </script>
 @endsection

@@ -9,6 +9,8 @@ use App\User;
 use App\Models\Slider;
 use Validator;
 use Image;
+use App\Models\Store;
+use App\Models\Coupon;
 
 class SliderController extends Controller {
 
@@ -54,6 +56,7 @@ class SliderController extends Controller {
             }
             
             $slider=  new Slider();
+                $slider->url= $request->slider_link!=0?$request->data:'';
                 $photo = $request->file('image');
                 $ext = $request->image->getClientOriginalExtension();
                 $new_name = time() . '.' . $ext;
@@ -80,31 +83,36 @@ class SliderController extends Controller {
         if ($request->method() == "GET") {
             return view('slider.edit', ['slider' => $slider]);
         } else {
-            $validator = Validator::make($request->all(), [
-                        'image' => 'required',
-            ]);
-             if ($validator->fails()) {
-            return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
-        }
+//            $validator = Validator::make($request->all(), [
+//                        'image' => 'required',
+//            ]);
+//             if ($validator->fails()) {
+//            return redirect()->back()
+//                        ->withErrors($validator)
+//                        ->withInput();
+//        }
         
+                $slider->slider_url= $request->slider_link;
+                $slider->url= $request->slider_link!=0?$request->data:'';
                 $photo = $request->file('image');
-                $ext = $request->image->getClientOriginalExtension();
-                $new_name = time() . '.' . $ext;
-                
-                $destinationPath = public_path('backend/img/slider/main');
-                $thumb_img = Image::make($photo->getRealPath())->resize(1681, 647);
-                $thumb_img->save($destinationPath . '/' . $new_name);
-                
-                $destinationPath = public_path('backend/img/slider/thumb');
-                $thumb_img = Image::make($photo->getRealPath())->resize(277, 264);
-                $thumb_img->save($destinationPath . '/' . $new_name);
+                if($request->hasFile('image'))
+                {
+                    $ext = $request->image->getClientOriginalExtension();
+                    $new_name = time() . '.' . $ext;
 
-                $destinationPath = public_path('backend/img/slider');
-                $photo->move($destinationPath, $new_name);
-                
-                $slider->image=$new_name;
+                    $destinationPath = public_path('backend/img/slider/main');
+                    $thumb_img = Image::make($photo->getRealPath())->resize(1681, 647);
+                    $thumb_img->save($destinationPath . '/' . $new_name);
+
+                    $destinationPath = public_path('backend/img/slider/thumb');
+                    $thumb_img = Image::make($photo->getRealPath())->resize(277, 264);
+                    $thumb_img->save($destinationPath . '/' . $new_name);
+
+                    $destinationPath = public_path('backend/img/slider');
+                    $photo->move($destinationPath, $new_name);
+
+                    $slider->image=$new_name;
+                }
             $slider->save();
             
             return redirect('admin/manage-slider');
@@ -116,6 +124,20 @@ class SliderController extends Controller {
         $slider=Slider::find($id);
         $slider->delete();
         return redirect('admin/manage-slider')->with('success','Slider Image deleted successfully!');
+    }
+    
+    public function getData(Request $request)
+    {
+        if($request->parameter=='store')
+        {
+            $store= Store::all();
+            return $store;
+        }
+        if($request->parameter=='coupon')
+        {
+            $coupon= Coupon::all();
+            return $coupon;
+        }
     }
 
 }

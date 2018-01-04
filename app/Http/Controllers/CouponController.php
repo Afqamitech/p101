@@ -11,6 +11,7 @@ use Validator;
 use Image;
 use App\Models\Category;
 use App\Models\Store;
+use App\Models\CouponSubCategory;
 
 class CouponController extends Controller {
 
@@ -35,13 +36,18 @@ class CouponController extends Controller {
     public function couponData() {
         $coupon = Coupon::all();
         
-        
         return Datatables::of($coupon)
-                        ->addColumn('status', function($coupon) {
-                            return $coupon->status == '1' ? 'Published' : "Unpublished";
+                        ->addColumn('top_deal', function($coupon) {
+                            if($coupon->top_deal)
+                                return '<input type="checkbox" value="'.$coupon->id.'" checked onclick="setTopDeal(this.value)">';
+                            else
+                                return '<input type="checkbox" value="'.$coupon->id.'" onclick="setTopDeal(this.value)">';
                         })
-                        ->addColumn('deal_of_the_day', function($coupon) {
-                            return $coupon->deal_of_the_day == '1' ? 'Yes' : "No";
+                        ->addColumn('status', function($coupon) {
+                            if($coupon->status)
+                                return '<label id="'.$coupon->id.'" onclick="setStatus(this.id)" class="label label-success">Publish</label>';
+                            else
+                                return '<label id="'.$coupon->id.'" onclick="setStatus(this.id)" class="label label-danger">Unpublish</label>';
                         })
                         ->addColumn('category', function($coupon) {
                             
@@ -56,16 +62,16 @@ class CouponController extends Controller {
 
     public function createCoupon(Request $request) {
         if ($request->method() == "GET") {
-            $category = Category::all();
+                $category = Category::all();
             return view('coupon.create', ['categories' => $category]);
         } else {
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
                         'label' => 'required',
-                        'image' => 'required',
                         'offer_line' => 'required',
                         'expiry_date' => 'required',
                         'store' => 'required',
+                        'coupon_code' => 'required_if:coupon_deal,0',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()
@@ -73,30 +79,27 @@ class CouponController extends Controller {
                                 ->withInput();
             }
             $coupon = new Coupon();
+            $coupon->coupon_type = $request->coupon_deal;
+            $coupon->coupon_code = $request->coupon_deale==0?$request->coupon_code:'';
             $coupon->category_id = $request->category;
             $coupon->store_id = $request->store;
             $coupon->name = $request->name;
             $coupon->label = $request->label;
+            $coupon->url = $request->url;
             $coupon->offer_line = $request->offer_line;
-            if($request->has('deal_of_the_day'))
-            $coupon->deal_of_the_day = $request->deal_of_the_day ;
             $coupon->expiry_date = $request->expiry_date;
-            $coupon->status = $request->status;
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image');
-                $ext = $request->image->getClientOriginalExtension();
-                $new_name = time() . '.' . $ext;
-
-                $destinationPath = public_path('backend/img/coupon-image/thumb');
-                $thumb_img = Image::make($photo->getRealPath())->resize(324, 143);
-                $thumb_img->save($destinationPath . '/' . $new_name);
-
-                $destinationPath = public_path('backend/img/coupon-image');
-                $photo->move($destinationPath, $new_name);
-
-                $coupon->image = $new_name;
-            }
             $coupon->save();
+            
+            if($request->sub_category)
+            {
+                foreach($request->sub_category as $sub_category)
+                {
+                    $coupon_sub_category=  new CouponSubCategory();
+                    $coupon_sub_category->coupon_id = $coupon->id;
+                    $coupon_sub_category->sub_category_id = $sub_category;
+                    $coupon_sub_category->save();
+                }
+            }
             return redirect('admin/manage-coupon')->with('success', 'Coupon Added Successfully!');
         }
     }
@@ -105,7 +108,9 @@ class CouponController extends Controller {
         $coupon = Coupon::find($id);
         if ($request->method() == "GET") {
             $category=  Category::all();
-            return view('coupon.edit', ['coupon' => $coupon,'categories'=>$category]);
+            $sub_category=  \App\Models\SubCategory::where('category_id',$coupon->category_id)->get();
+            $store=  Store::all();
+            return view('coupon.edit', ['coupon' => $coupon,'categories'=>$category,'stores'=>$store,'sub_categories'=>$sub_category]);
         } else {
             $validator = Validator::make($request->all(), [
                         'name' => 'required',
@@ -113,6 +118,8 @@ class CouponController extends Controller {
                         'offer_line' => 'required',
                         'expiry_date' => 'required',
                         'store' => 'required',
+                        'store' => 'required',
+                        'coupon_code' => 'required_if:coupon_deal,0',
             ]);
             if ($validator->fails()) {
                 return redirect()->back()
@@ -120,31 +127,28 @@ class CouponController extends Controller {
                                 ->withInput();
             }
 
+            $coupon->coupon_type = $request->coupon_deal;
+            $coupon->coupon_code = $request->coupon_deale==0?$request->coupon_code:'';
             $coupon->category_id = $request->category;
             $coupon->store_id = $request->store;
             $coupon->name = $request->name;
             $coupon->label = $request->label;
+            $coupon->url = $request->url;
             $coupon->offer_line = $request->offer_line;
-            if($request->has('deal_of_the_day')){
-            $coupon->deal_of_the_day = $request->deal_of_the_day;
-            }
             $coupon->expiry_date = $request->expiry_date;
-            $coupon->status = $request->status;
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image');
-                $ext = $request->image->getClientOriginalExtension();
-                $new_name = time() . '.' . $ext;
-
-                $destinationPath = public_path('backend/img/coupon-image/thumb');
-                $thumb_img = Image::make($photo->getRealPath())->resize(324, 143);
-                $thumb_img->save($destinationPath . '/' . $new_name);
-
-                $destinationPath = public_path('backend/img/coupon-image');
-                $photo->move($destinationPath, $new_name);
-
-                $coupon->image = $new_name;
-            }
             $coupon->save();
+            
+            CouponSubCategory::where('coupon_id',$coupon->id)->delete();
+            if($request->sub_category)
+            {
+                foreach($request->sub_category as $sub_category)
+                {
+                    $coupon_sub_category=  new CouponSubCategory();
+                    $coupon_sub_category->coupon_id = $coupon->id;
+                    $coupon_sub_category->sub_category_id = $sub_category;
+                    $coupon_sub_category->save();
+                }
+            }
             return redirect('admin/manage-coupon')->with('success', 'Coupon Added Successfully!');
         }
     }
@@ -156,8 +160,33 @@ class CouponController extends Controller {
     }
 
     public function getStores(Request $request) {
-        $store = Store::where('category_id', $request->category_id)->get();
-        return $store;
+        $category= Category::find($request->category_id);
+        
+        foreach($category->storeCategories as $category)
+        {
+            if($category->stores)
+            $all_store[]=$category->stores;
+        }
+        return $all_store;
     }
-
+    
+    public function getSubCategory(Request $request)
+    {
+        $sub_category=  \App\Models\SubCategory::where('category_id',$request->category_id)->get();
+        return $sub_category;
+    }
+    
+    public function setTopDeal(Request $request)
+    {
+        $coupon=  Coupon::find($request->coupon_id);
+        $coupon->top_deal==0?$coupon->top_deal=1:$coupon->top_deal=0;
+        $coupon->save();
+    }
+        
+    public function setstatus(Request $request)
+    {
+        $coupon=  Coupon::find($request->coupon_id);
+        $coupon->status==0?$coupon->status=1:$coupon->status=0;
+        $coupon->save();
+    }
 }

@@ -26,26 +26,27 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function listUser() {
-                $users = \App\User::where('user_type','2')->get();
+    public function listUser(Request $request) {
+        
+        $users =null;
+        if($request->has('search'))
+        {
+                $users = \App\User::where('user_type','2')->where('flingal_id','like',"%".$request->search."%")->get();
+        }
 
-        return view('users.list',['users'=>$users]);
+        return view('users.list',['users'=>$users,'request'=>$request]);
     }
 
     public function userData(Request $request) {
-        
-        
         $users = \App\User::where('user_type','2')->get();
-        
-        
-       
         return Datatables::of($users)
-
                 ->make(true);
     }
 public function viewDetail(Request $request, $id) {
     
    $user = User::find($id);
+   
+   
         if ($request->method() == "GET") {
             return view('users.view', ['user' => $user]);
         }

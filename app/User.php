@@ -2,20 +2,17 @@
 
 namespace App;
 
-//use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-//    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'mobile', 'email_id', 'password', 'provider', 'provider_id', 'name', 'image', 'flingal_id', 'user_type'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -27,9 +24,34 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
-    public function userInformation()
+    
+    public function approvedAmount()
     {
-        return $this->hasOne('App\UserInformation');
+        
+        return $this->hasOne('App\Models\GlobalWallet','flingal_id','flingal_id')->where('status',1);
     }
     
+    public function pendingCashBackAmount()
+    {
+        
+        return $this->hasMany('App\Models\OrderHistory','flingal_id','flingal_id')->where('status',0)->where('type',1);
+    }
+    
+    public function pendingRewardAmount()
+    {
+        
+        return $this->hasMany('App\Models\OrderHistory','flingal_id','flingal_id')->where('status',0)->where('type',2);
+    }
+    
+    public function paidCashBackAmount()
+    {
+        
+        return $this->hasMany('App\Models\Redeem','flingal_id','flingal_id')->where('redeem_type',0)->where('status',1);
+    }
+    
+    public function paidRewardAmount()
+    {
+        
+        return $this->hasMany('App\Models\Redeem','flingal_id','flingal_id')->where('redeem_type',1)->where('status',2);
+    }
 }
