@@ -10,6 +10,7 @@ Order History
 </ul>
 <h2>Order History Master</h2>
 <hr>
+
 <a href="{{url('admin/manage-order-history/create-order-history')}}" class="btn btn-primary">Add new</a>
 <div class="container">
     <table id="users" class="table table-hover table-condensed" style="width:100%">
